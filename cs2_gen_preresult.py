@@ -32,6 +32,12 @@ TEAMS = []
 # 第一轮对局配对（8场BO1）
 ROUND1_MATCHUPS = []
 
+# 战队积分
+TEAM_SCORES = {}
+
+# 积分权重参数
+SCORING_PARAMS = {}
+
 # 外部数据文件路径
 MATCHES_FILE = 'data/cs2_cleaned_matches.csv'  # 历史比赛数据
 TEAM_RATINGS_FILE = 'data/hltv_ratings.txt'  # 战队评分数据
@@ -56,6 +62,12 @@ def load_external_config():
                 TEAMS.extend(config.get('teams', []))
                 ROUND1_MATCHUPS.extend([tuple(matchup) for matchup in config.get('round1_matchups', [])])
                 
+                # 加载战队积分
+                TEAM_SCORES = config.get('team_scores', {})
+                
+                # 加载积分权重参数
+                SCORING_PARAMS = config.get('scoring_params', {'elo_weight': 0.7, 'score_weight': 0.3})
+                
                 # 加载ELO参数
                 elo_params = config.get('elo_params', {})
                 BASE_ELO = elo_params.get('base_elo', BASE_ELO)
@@ -79,7 +91,7 @@ def set_default_config():
     """
     设置默认的队伍和对局配置
     """
-    global TEAMS, ROUND1_MATCHUPS
+    global TEAMS, ROUND1_MATCHUPS, TEAM_SCORES, SCORING_PARAMS
     
     # 清空现有配置
     TEAMS.clear()
@@ -114,6 +126,32 @@ def set_default_config():
         ("G2", "Passion UA"),                 # Match 7
         ("paiN", "3DMAX")                     # Match 8
     ])
+    
+    # 设置默认积分
+    TEAM_SCORES = {
+        "FURIA": 2001,
+        "Natus Vincere": 1690,
+        "Vitality": 1883,
+        "FaZe": 1545,
+        "Falcons": 1914,
+        "B8": 1573,
+        "The MongolZ": 1758,
+        "Imperial": 1321,
+        "MOUZ": 1799,
+        "PARIVISION": 1487,
+        "Spirit": 1717,
+        "Liquid": 1694,
+        "G2": 1691,
+        "Passion UA": 1380,
+        "paiN": 1576,
+        "3DMAX": 1589
+    }
+    
+    # 设置默认权重
+    SCORING_PARAMS = {
+        'elo_weight': 0.7,
+        'score_weight': 0.3
+    }
 
 
 def load_config():
@@ -264,17 +302,53 @@ def calculate_elo_ratings(matches_df, initial_ratings, base_k_factor=40, time_de
     return ratings
 
 
+def calculate_winrate(score_a, score_b):
+    """根据两支队伍的积分计算胜率，使用加权平均和sigmoid函数相结合的方式"""
+    # 基础胜率基于积分比例
+    total_score = score_a + score_b
+    
+    # 避免除零错误
+    if total_score == 0:
+        return 50.0  # 如果两队积分都为0，则胜率为50%
+    
+    # 基于积分比例的基础胜率
+    base_winrate = (score_a / total_score) * 100
+    
+    # 使用sigmoid函数调整胜率差，使结果更平滑
+    diff = score_a - score_b
+    adjustment_factor = 25 * (diff / (abs(diff) + 50))  # 调整因子
+    
+    # 加权平均：基础胜率占70%，调整因子占30%
+    winrate = 0.7 * base_winrate + 0.3 * (50 + adjustment_factor)
+    
+    # 确保胜率在0-100之间
+    return max(0, min(100, winrate))
+
+
 def predict_match(team1, team2, ratings, bo_format='bo1'):
     """
-    预测比赛胜率（基于ELO差值）
+    预测比赛胜率（结合ELO评分和战队积分）
     """
+    # 1. 基于ELO评分的胜率
     r1, r2 = ratings.get(team1, 1000), ratings.get(team2, 1000)
-    base_prob1 = 1 / (1 + math.pow(10, (r2 - r1) / 400))
+    elo_prob1 = 1 / (1 + math.pow(10, (r2 - r1) / 400))
     
+    # 2. 基于战队积分的胜率
+    score1 = TEAM_SCORES.get(team1, 1500)  # 默认积分1500
+    score2 = TEAM_SCORES.get(team2, 1500)  # 默认积分1500
+    score_prob1 = calculate_winrate(score1, score2) / 100  # 转换为0-1范围
+    
+    # 3. 根据权重参数组合两种预测
+    elo_weight = SCORING_PARAMS.get('elo_weight', 0.7)
+    score_weight = SCORING_PARAMS.get('score_weight', 0.3)
+    
+    combined_prob1 = elo_weight * elo_prob1 + score_weight * score_prob1
+    
+    # 4. 根据比赛格式调整（原逻辑保留）
     if bo_format == 'bo1':
-        prob1 = 0.5 + (base_prob1 - 0.5) * 0.85
+        prob1 = 0.5 + (combined_prob1 - 0.5) * 0.85
     else:
-        prob1 = base_prob1
+        prob1 = combined_prob1
     
     return prob1, 1 - prob1
 
