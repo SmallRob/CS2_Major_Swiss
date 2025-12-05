@@ -55,6 +55,15 @@
     "score_weight": 0.3
   },
   "simulation_params": {
-    "playoff_simulations": 10000000
+    "playoff_simulations": 10000000,
+    "num_simulations": 50000
+  },
+  "performance_params": {
+    "eval_batch_size": 5000,
+    "save_every": 1000000
+  },
+  "device_params": {
+    "use_gpu": false,
+    "gpu_id": 0
   }
 }

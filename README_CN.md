@@ -50,19 +50,22 @@ pip install -r requirements.txt
 
 ### 2. 配置模拟参数
 
-编辑 `batchsize.yaml` 调整性能：
+编辑 `data/config.json` 调整性能：
 
-```yaml
-simulation:
-  num_simulations: 500  # 蒙特卡洛模拟次数
-
-performance:
-  eval_batch_size: 5000  # 根据显存大小调整
-  save_every: 1000000    # 检查点保存频率
-
-device:
-  use_gpu: true          # true 用 GPU，false 用 CPU
-  gpu_id: 0              # GPU 设备 ID（通常是 0）
+```json
+{
+  "simulation_params": {
+    "num_simulations": 50000
+  },
+  "performance_params": {
+    "eval_batch_size": 5000,
+    "save_every": 1000000
+  },
+  "device_params": {
+    "use_gpu": true,
+    "gpu_id": 0
+  }
+}
 ```
 
 ### 3. 编辑队伍数据

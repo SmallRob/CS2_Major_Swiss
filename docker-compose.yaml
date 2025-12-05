@@ -12,12 +12,10 @@ services:
               count: 1
               capabilities: [gpu]
     volumes:
-      # 挂载配置文件
-      - ./batchsize.yaml:/app/batchsize.yaml
       # 挂载数据目录
       - ./data:/app/data
       # 挂载输出目录并实现持久化
       - ./output:/app/output
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
-    command: bash -c "python cs2_gen_preresult.py && python cs2_gen_final.py"
+    command: bash -c "python cs2_gen_preresult.py && python cs2_gen_swiss.py && python cs2_prediction_final.json"

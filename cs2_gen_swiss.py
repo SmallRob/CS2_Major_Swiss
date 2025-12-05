@@ -3,7 +3,7 @@ CS2 Major 瑞士轮预测系统（Part 2: GPU/Tensor 加速优化）
 核心功能：
 1. 张量化计算：将模拟数据转换为布尔矩阵
 2. 矩阵乘法加速：利用 GPU (CUDA) 并行计算数百万种组合的通过率
-3. 批量处理：通过 batchsize.yaml 控制显存占用
+3. 批量处理：通过 config.json 控制显存占用
 """
 
 import json
@@ -43,9 +43,8 @@ def load_external_config():
 
 def load_config():
     """
-    加载 batchsize.yaml 配置文件
+    从 config.json 加载配置
     """
-    config_path = 'batchsize.yaml'
     defaults = {
         'device': {
             'use_gpu': True,
@@ -57,20 +56,20 @@ def load_config():
         }
     }
     
-    if os.path.exists(config_path):
+    if os.path.exists(CONFIG_FILE):
         try:
-            with open(config_path, 'r', encoding='utf-8') as f:
-                user_config = yaml.safe_load(f)
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                user_config = json.load(f)
                 if user_config:
-                    if 'device' in user_config:
-                        defaults['device'].update(user_config['device'])
-                    if 'performance' in user_config:
-                        defaults['performance'].update(user_config['performance'])
-                print(f"[配置] 已加载 {config_path}")
+                    if 'device_params' in user_config:
+                        defaults['device'].update(user_config['device_params'])
+                    if 'performance_params' in user_config:
+                        defaults['performance'].update(user_config['performance_params'])
+                print(f"[配置] 已加载 {CONFIG_FILE}")
         except Exception as e:
             print(f"[警告] 加载配置文件失败，使用默认设置: {e}")
     else:
-        print(f"[提示] 未找到 {config_path}，使用默认设置")
+        print(f"[提示] 未找到 {CONFIG_FILE}，使用默认设置")
         
     return defaults
 

@@ -56,18 +56,17 @@ docker-compose.yaml配置已启用NVIDIA GPU支持：
 ### 数据挂载
 
 容器内挂载了以下目录和文件：
-- `./batchsize.yaml` → `/app/batchsize.yaml`：性能配置文件
 - `./data` → `/app/data`：数据目录（包含配置文件、比赛数据和战队评分）
 - `./output` → `/app/output`：输出目录（持久化存储结果）
 
 ### 配置文件
 
-#### batchsize.yaml
-可以通过修改`batchsize.yaml`来调整程序性能：
-- `num_simulations`: 蒙特卡洛模拟次数
-- `eval_batch_size`: GPU批处理大小（根据显存调整）
-- `use_gpu`: 是否启用GPU加速（默认true）
-- `gpu_id`: GPU设备ID（默认0）
+#### data/config.json
+可以通过修改`data/config.json`来调整程序性能：
+- `simulation_params.num_simulations`: 蒙特卡洛模拟次数
+- `performance_params.eval_batch_size`: GPU批处理大小（根据显存调整）
+- `device_params.use_gpu`: 是否启用GPU加速（默认true）
+- `device_params.gpu_id`: GPU设备ID（默认0）
 
 #### data/config.json
 可以通过修改`data/config.json`来调整队伍、对局和ELO系统配置：
@@ -82,7 +81,8 @@ docker-compose.yaml配置已启用NVIDIA GPU支持：
 
 程序运行完成后，结果将保存在`./output`目录中：
 - `intermediate_sim_data.json`: 中间模拟数据
-- `final_prediction.json`: 最终预测结果
+- `swiss_prediction.json`: 瑞士轮预测结果
+- `playoff_prediction_final.json`: 最终晋级赛预测结果
 
 ## 故障排除
 
@@ -102,7 +102,7 @@ docker-compose.yaml配置已启用NVIDIA GPU支持：
 ### 显存不足
 
 如果出现CUDA Out of Memory错误，请：
-1. 减小`batchsize.yaml`中的`eval_batch_size`值
+1. 减小`config.json`中`performance_params.eval_batch_size`的值
 2. 重启容器
 
 ## CPU环境运行
@@ -114,6 +114,6 @@ docker-compose.yaml配置已启用NVIDIA GPU支持：
 docker-compose -f docker-compose.cpu.yaml up
 ```
 
-2. 或者手动修改 `batchsize.yaml` 文件，将 `use_gpu` 设置为 `false`
+2. 或者手动修改 `config.json` 文件，将 `device_params.use_gpu` 设置为 `false`
 
 注意：在CPU模式下运行可能需要更长的时间来完成模拟计算。

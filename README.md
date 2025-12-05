@@ -50,19 +50,22 @@ pip install -r requirements.txt
 
 ### 2. Configure simulation settings
 
-Edit `batchsize.yaml` to adjust performance:
+Edit `data/config.json` to adjust performance:
 
-```yaml
-simulation:
-  num_simulations: 500  # Number of Monte Carlo simulations
-
-performance:
-  eval_batch_size: 5000  # Adjust based on GPU memory
-  save_every: 1000000    # Checkpoint frequency
-
-device:
-  use_gpu: true          # true for GPU, false for CPU
-  gpu_id: 0              # GPU device ID (usually 0)
+```json
+{
+  "simulation_params": {
+    "num_simulations": 50000
+  },
+  "performance_params": {
+    "eval_batch_size": 5000,
+    "save_every": 1000000
+  },
+  "device_params": {
+    "use_gpu": true,
+    "gpu_id": 0
+  }
+}
 ```
 
 ### 3. Edit team data

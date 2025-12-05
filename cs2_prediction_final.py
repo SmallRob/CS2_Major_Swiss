@@ -1,3 +1,10 @@
+"""
+CS2 Major 瑞士轮预测系统（Part 3: 最终晋级赛预测）
+核心功能：
+1. 生成晋级赛对阵
+2. 模拟晋级赛
+3. 输出晋级赛结果
+"""
 import json
 import itertools
 import random
@@ -124,7 +131,8 @@ class PlayoffSimulator:
         """显示进度条"""
         percent = current / total
         filled_length = int(length * percent)
-        bar = '█' * filled_length + '░' * (length - filled_length)
+        # 使用兼容性更好的字符
+        bar = '#' * filled_length + '-' * (length - filled_length)
         return f"\r进度: [{bar}] {current}/{total} ({percent:.1%})"
     
     def simulate_playoff(self, quarter_finals, num_simulations=1000):
@@ -332,10 +340,17 @@ def main():
     playoff_prediction = generate_playoff_prediction(prediction_data, quarter_finals)
     
     # 保存结果
-    output_file = "output/cs2_gen_prediction.json"
+    output_file = "output/playoff_prediction_final.json"
     save_playoff_prediction(playoff_prediction, output_file)
     
-    # 打印晋级赛对阵和最终预测
+    # 加载配置以获取初始积分
+    config = load_config()
+    team_scores = config.get("team_scores", {})
+    
+    # 获取模拟次数用于显示
+    num_simulations = config["simulation_params"]["playoff_simulations"]
+    
+    # 打印新的格式化输出
     print("\n" + "="*60)
     print("CS2 Major 晋级赛对阵预测")
     print("="*60)
@@ -360,29 +375,65 @@ def main():
     print("="*60)
     print(f"\n冠军预测: {playoff_prediction['final_champion']}")
     
-    # 获取模拟次数用于显示
-    config = load_config()
-    num_simulations = config["simulation_params"]["playoff_simulations"]
+    # 新增：按指定格式显示统计数据
+    print("\n" + "="*80)
+    print(f"淘汰赛模拟结果统计（{num_simulations//10000}万次模拟）")
+    print("="*80)
     
-    print("\n" + "="*60)
-    print(f"📊 晋级概率分析 (基于{num_simulations}次模拟)")
-    print("="*60)
+    # 表头
+    print(f"{'队伍':<20} {'初始积分':<10} {'夺冠概率':<10} {'进决赛率':<10} {'进四强率':<10}")
+    print("-"*80)
     
-    print("\n4强概率:")
-    top4_sorted = sorted(playoff_prediction["probabilities"]["top4"].items(), key=lambda x: x[1], reverse=True)
-    for team, prob in top4_sorted[:8]:
-        print(f"  {team}: {prob:.1%}")
+    # 获取所有队伍及其统计数据
+    all_teams_stats = []
+    champion_probs = playoff_prediction["probabilities"]["champion"]
+    final_probs = playoff_prediction["probabilities"]["top2"]
+    semifinal_probs = playoff_prediction["probabilities"]["top4"]
     
-    print("\n决赛概率:")
-    top2_sorted = sorted(playoff_prediction["probabilities"]["top2"].items(), key=lambda x: x[1], reverse=True)
-    for team, prob in top2_sorted[:4]:
-        print(f"  {team}: {prob:.1%}")
+    # 收集所有队伍的数据
+    for team in champion_probs.keys():
+        initial_score = team_scores.get(team, 0)
+        champ_prob = champion_probs.get(team, 0)
+        final_prob = final_probs.get(team, 0)
+        semi_prob = semifinal_probs.get(team, 0)
+        
+        all_teams_stats.append({
+            "team": team,
+            "initial_score": initial_score,
+            "champ_prob": champ_prob,
+            "final_prob": final_prob,
+            "semi_prob": semi_prob
+        })
     
-    print("\n冠军概率:")
-    champ_sorted = sorted(playoff_prediction["probabilities"]["champion"].items(), key=lambda x: x[1], reverse=True)
-    for team, prob in champ_sorted[:3]:
-        print(f"  🏆 {team}: {prob:.1%}")
+    # 如果某些队伍没有在统计数据中，从配置中添加它们
+    for team_name in team_scores.keys():
+        if team_name not in [stat["team"] for stat in all_teams_stats]:
+            all_teams_stats.append({
+                "team": team_name,
+                "initial_score": team_scores[team_name],
+                "champ_prob": 0.0,
+                "final_prob": 0.0,
+                "semi_prob": 0.0
+            })
     
+    # 按夺冠概率排序
+    all_teams_stats.sort(key=lambda x: x["champ_prob"], reverse=True)
+    
+    # 显示所有8支队伍的详细统计数据（8支参赛队伍）
+    for i, stats in enumerate(all_teams_stats):
+        if i >= 8:  # 只显示前8名（参赛队伍）
+            break
+        team_display = stats["team"][:20]  # 截断过长的队名
+        print(f"{team_display:<20} {stats['initial_score']:<10} {stats['champ_prob']:.2%}   {stats['final_prob']:.2%}   {stats['semi_prob']:.2%}")
+    
+    print("\n" + "="*80)
+    print("📊 夺冠概率前五名队伍")
+    print("="*80)
+    
+    # 显示夺冠概率前5名
+    for i, stats in enumerate(all_teams_stats[:5]):
+        print(f"{i+1}. {stats['team']}: {stats['champ_prob']:.2%}")
+
     print(f"\n基于原始预测成功率: {playoff_prediction['based_on_success_rate']:.2%}")
     
     # 晋级路径预测
@@ -447,9 +498,9 @@ def main():
             break
     
     # 决赛
-    final = playoff_prediction["final"]
-    if final['predicted_winner'] == champion:
-        champion_path.append(f"  决赛: 击败 {final['team2'] if final['team1'] == champion else final['team1']} (BO5)")
+    final_match = playoff_prediction["final"]
+    if final_match['predicted_winner'] == champion:
+        champion_path.append(f"  决赛: 击败 {final_match['team2'] if final_match['team1'] == champion else final_match['team1']} (BO5)")
     
     for step in champion_path:
         print(step)

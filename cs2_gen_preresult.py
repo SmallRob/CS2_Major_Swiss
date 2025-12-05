@@ -158,26 +158,25 @@ def load_config():
     """
     加载配置文件，获取模拟次数
     """
-    config_path = 'batchsize.yaml'
     config = {
         'simulation': {
             'num_simulations': 100000 
         }
     }
     
-    if os.path.exists(config_path):
+    if os.path.exists(CONFIG_FILE):
         try:
-            with open(config_path, 'r', encoding='utf-8') as f:
-                user_config = yaml.safe_load(f)
-                if user_config and 'simulation' in user_config:
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                user_config = json.load(f)
+                if user_config and 'simulation_params' in user_config:
                     # 更新配置
-                    if 'num_simulations' in user_config['simulation']:
-                        config['simulation']['num_simulations'] = user_config['simulation']['num_simulations']
-                print(f"[配置] 已加载 {config_path}")
+                    if 'num_simulations' in user_config['simulation_params']:
+                        config['simulation']['num_simulations'] = user_config['simulation_params']['num_simulations']
+                print(f"[配置] 已加载 {CONFIG_FILE}")
         except Exception as e:
             print(f"[警告] 加载配置文件失败: {e}，将使用默认值")
     else:
-        print(f"[提示] 未找到 {config_path}，使用默认设置 (100,000次)")
+        print(f"[提示] 未找到 {CONFIG_FILE}，使用默认设置 (100,000次)")
         
     return config
 
