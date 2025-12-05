@@ -16,7 +16,8 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 import multiprocessing
 import time
-import yaml
+import pandas as pd
+import numpy as np
 
 # 占位符，将在main中初始化
 pd = None
@@ -168,11 +169,14 @@ def load_config():
         try:
             with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
                 user_config = json.load(f)
-                if user_config and 'simulation_params' in user_config:
-                    # 更新配置
-                    if 'num_simulations' in user_config['simulation_params']:
-                        config['simulation']['num_simulations'] = user_config['simulation_params']['num_simulations']
+                if user_config and isinstance(user_config, dict):
+                    if 'simulation_params' in user_config and isinstance(user_config['simulation_params'], dict):
+                        # 更新配置
+                        if 'num_simulations' in user_config['simulation_params']:
+                            config['simulation']['num_simulations'] = user_config['simulation_params']['num_simulations']
                 print(f"[配置] 已加载 {CONFIG_FILE}")
+        except json.JSONDecodeError as e:
+            print(f"[警告] 配置文件格式错误: {e}，将使用默认值")
         except Exception as e:
             print(f"[警告] 加载配置文件失败: {e}，将使用默认值")
     else:
