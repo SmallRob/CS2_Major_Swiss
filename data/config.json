@@ -1,0 +1,35 @@
+{
+  "teams": [
+    "FURIA",
+    "Natus Vincere", 
+    "Vitality",
+    "FaZe",
+    "Falcons",
+    "B8",
+    "The MongolZ",
+    "Imperial",
+    "MOUZ",
+    "PARIVISION",
+    "Spirit",
+    "Liquid",
+    "G2",
+    "Passion UA",
+    "paiN",
+    "3DMAX"
+  ],
+  "round1_matchups": [
+    ["FURIA", "Natus Vincere"],
+    ["Vitality", "FaZe"],
+    ["Falcons", "B8"],
+    ["The MongolZ", "Imperial"],
+    ["MOUZ", "PARIVISION"],
+    ["Spirit", "Liquid"],
+    ["G2", "Passion UA"],
+    ["paiN", "3DMAX"]
+  ],
+  "elo_params": {
+    "base_elo": 1000,
+    "base_k_factor": 40,
+    "time_decay_days": 50
+  }
+}

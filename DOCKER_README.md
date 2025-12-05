@@ -56,17 +56,27 @@ docker-compose.yaml配置已启用NVIDIA GPU支持：
 ### 数据挂载
 
 容器内挂载了以下目录和文件：
-- `./batchsize.yaml` → `/app/batchsize.yaml`：配置文件
-- `./data` → `/app/data`：数据目录
+- `./batchsize.yaml` → `/app/batchsize.yaml`：性能配置文件
+- `./data` → `/app/data`：数据目录（包含配置文件、比赛数据和战队评分）
 - `./output` → `/app/output`：输出目录（持久化存储结果）
 
 ### 配置文件
 
-可以通过修改`batchsize.yaml`来调整程序行为：
+#### batchsize.yaml
+可以通过修改`batchsize.yaml`来调整程序性能：
 - `num_simulations`: 蒙特卡洛模拟次数
 - `eval_batch_size`: GPU批处理大小（根据显存调整）
 - `use_gpu`: 是否启用GPU加速（默认true）
 - `gpu_id`: GPU设备ID（默认0）
+
+#### data/config.json
+可以通过修改`data/config.json`来调整队伍、对局和ELO系统配置：
+- `teams`: 参赛队伍列表（按种子顺序排列）
+- `round1_matchups`: 第一轮对局配对
+- `elo_params`: ELO系统参数
+  - `base_elo`: 基础ELO分数（默认1000）
+  - `base_k_factor`: 基础K因子（默认40）
+  - `time_decay_days`: 时间衰减天数（默认50）
 
 ## 输出结果
 

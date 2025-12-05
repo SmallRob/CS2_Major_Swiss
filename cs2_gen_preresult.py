@@ -22,51 +22,98 @@ import yaml
 pd = None
 
 # ============================================================================
-# 配置区域（直接修改此处配置）
+# 配置区域（从外部JSON文件加载）
 # ============================================================================
 
 # 参赛战队（16支队伍）
 # ⚠️ 重要：TEAMS 列表的顺序就是初始种子排序（种子1到种子16）
-TEAMS = [
-    "FURIA",          # 种子1
-    "Natus Vincere",  # 种子2
-    "Vitality",       # 种子3
-    "FaZe",           # 种子4
-    "Falcons",        # 种子5
-    "B8",             # 种子6
-    "The MongolZ",    # 种子7
-    "Imperial",       # 种子8
-    "MOUZ",           # 种子9
-    "PARIVISION",     # 种子10
-    "Spirit",         # 种子11
-    "Liquid",         # 种子12
-    "G2",             # 种子13
-    "Passion UA",     # 种子14
-    "paiN",           # 种子15
-    "3DMAX"           # 种子16
-]
+TEAMS = []
 
 # 第一轮对局配对（8场BO1）
-ROUND1_MATCHUPS = [
-    ("FURIA", "Natus Vincere"),           # Match 1
-    ("Vitality", "FaZe"),                 # Match 2
-    ("Falcons", "B8"),                    # Match 3
-    ("The MongolZ", "Imperial"),          # Match 4
-    ("MOUZ", "PARIVISION"),               # Match 5
-    ("Spirit", "Liquid"),                 # Match 6
-    ("G2", "Passion UA"),                 # Match 7
-    ("paiN", "3DMAX")                     # Match 8
-]
+ROUND1_MATCHUPS = []
 
 # 外部数据文件路径
 MATCHES_FILE = 'data/cs2_cleaned_matches.csv'  # 历史比赛数据
 TEAM_RATINGS_FILE = 'data/hltv_ratings.txt'  # 战队评分数据
+CONFIG_FILE = 'data/config.json'  # 配置文件
 
 # ELO系统参数
 BASE_ELO = 1000
 BASE_K_FACTOR = 40
 TIME_DECAY_DAYS = 50
 
+
+def load_external_config():
+    """
+    从外部JSON配置文件加载队伍和对局配置
+    """
+    global TEAMS, ROUND1_MATCHUPS, BASE_ELO, BASE_K_FACTOR, TIME_DECAY_DAYS
+    
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+                TEAMS.extend(config.get('teams', []))
+                ROUND1_MATCHUPS.extend([tuple(matchup) for matchup in config.get('round1_matchups', [])])
+                
+                # 加载ELO参数
+                elo_params = config.get('elo_params', {})
+                BASE_ELO = elo_params.get('base_elo', BASE_ELO)
+                BASE_K_FACTOR = elo_params.get('base_k_factor', BASE_K_FACTOR)
+                TIME_DECAY_DAYS = elo_params.get('time_decay_days', TIME_DECAY_DAYS)
+                
+            print(f"[配置] 已加载 {CONFIG_FILE}")
+            return True
+        except Exception as e:
+            print(f"[警告] 加载配置文件失败: {e}")
+            # 如果加载失败，使用默认配置
+            set_default_config()
+            return False
+    else:
+        print(f"[提示] 未找到 {CONFIG_FILE}，使用默认设置")
+        set_default_config()
+        return False
+
+
+def set_default_config():
+    """
+    设置默认的队伍和对局配置
+    """
+    global TEAMS, ROUND1_MATCHUPS
+    
+    # 清空现有配置
+    TEAMS.clear()
+    TEAMS.extend([
+        "FURIA",          # 种子1
+        "Natus Vincere",  # 种子2
+        "Vitality",       # 种子3
+        "FaZe",           # 种子4
+        "Falcons",        # 种子5
+        "B8",             # 种子6
+        "The MongolZ",    # 种子7
+        "Imperial",       # 种子8
+        "MOUZ",           # 种子9
+        "PARIVISION",     # 种子10
+        "Spirit",         # 种子11
+        "Liquid",         # 种子12
+        "G2",             # 种子13
+        "Passion UA",     # 种子14
+        "paiN",           # 种子15
+        "3DMAX"           # 种子16
+    ])
+    
+    # 清空现有对局配置
+    ROUND1_MATCHUPS.clear()
+    ROUND1_MATCHUPS.extend([
+        ("FURIA", "Natus Vincere"),           # Match 1
+        ("Vitality", "FaZe"),                 # Match 2
+        ("Falcons", "B8"),                    # Match 3
+        ("The MongolZ", "Imperial"),          # Match 4
+        ("MOUZ", "PARIVISION"),               # Match 5
+        ("Spirit", "Liquid"),                 # Match 6
+        ("G2", "Passion UA"),                 # Match 7
+        ("paiN", "3DMAX")                     # Match 8
+    ])
 
 
 def load_config():
@@ -408,6 +455,21 @@ def main():
     print("CS2 Major 瑞士轮预测系统数据生成")
     print("=" * 60)
     print(f"[LOG] {datetime.now().strftime('%H:%M:%S')} - 程序启动", flush=True)
+    
+    # 加载外部配置
+    load_external_config()
+    
+    # 验证配置
+    if not TEAMS:
+        print("[错误] 未加载到有效的队伍配置")
+        return
+        
+    if not ROUND1_MATCHUPS:
+        print("[错误] 未加载到有效的第一轮对局配置")
+        return
+    
+    print(f"[配置] 已加载 {len(TEAMS)} 支队伍")
+    print(f"[配置] 已加载 {len(ROUND1_MATCHUPS)} 场第一轮对局")
     
     config = load_config()
     num_sims = config['simulation']['num_simulations']

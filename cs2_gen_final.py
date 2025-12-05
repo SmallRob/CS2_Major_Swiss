@@ -15,9 +15,31 @@ import itertools
 import torch
 from datetime import datetime
 from tqdm import tqdm
+
 # ============================================================================
 # 配置加载
 # ============================================================================
+
+CONFIG_FILE = 'data/config.json'  # 配置文件
+
+def load_external_config():
+    """
+    从外部JSON配置文件加载队伍配置
+    """
+    teams = []
+    
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+                teams.extend(config.get('teams', []))
+            print(f"[配置] 已加载 {CONFIG_FILE}")
+        except Exception as e:
+            print(f"[警告] 加载配置文件失败: {e}")
+    else:
+        print(f"[提示] 未找到 {CONFIG_FILE}")
+    
+    return teams
 
 def load_config():
     """
@@ -68,7 +90,17 @@ class PickemOptimizer:
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
                 self.data = json.load(f)
-            self.teams = self.data['teams']
+            
+            # 优先使用外部配置文件中的队伍列表
+            external_teams = load_external_config()
+            if external_teams:
+                self.teams = external_teams
+                print(f"[配置] 使用外部配置文件中的队伍列表: {len(self.teams)} 支队伍")
+            else:
+                # 如果外部配置文件不存在或为空，则使用数据文件中的队伍列表
+                self.teams = self.data['teams']
+                print(f"[配置] 使用数据文件中的队伍列表: {len(self.teams)} 支队伍")
+                
             self.team_to_idx = {team: i for i, team in enumerate(self.teams)}
             self.raw_sims = self.data['raw_simulations']
             self.num_sims = len(self.raw_sims)
