@@ -31,5 +31,27 @@
     "base_elo": 1000,
     "base_k_factor": 40,
     "time_decay_days": 50
+  },
+  "team_scores": {
+    "FURIA": 2001,
+    "Natus Vincere": 1690,
+    "Team Vitality": 1883,
+    "FaZe Clan": 1545,
+    "Team Falcons": 1914,
+    "B8": 1573,
+    "The MongolZ": 1758,
+    "Imperial Esports": 1321,
+    "MOUZ": 1799,
+    "PARIVISION": 1487,
+    "Team Spirit": 1717,
+    "Team Liquid": 1694,
+    "G2 Esports": 1691,
+    "Passion UA": 1380,
+    "paiN Gaming": 1576,
+    "3DMAX": 1589
+  },
+  "scoring_params": {
+    "elo_weight": 0.7,
+    "score_weight": 0.3
   }
 }
