@@ -1,0 +1,538 @@
+date,team1,score1,score2,team2,tournament,format
+2025-12-05,FURIA,13,5,Imperial,StarLadder Budapest Major 2025,bo1
+2025-12-05,FURIA,13,2,Natus Vincere,StarLadder Budapest Major 2025,bo1
+2025-11-16,FURIA,3,1,Falcons,BLAST Rivals 2025 Season 2,bo5
+2025-11-15,FURIA,2,0,paiN,BLAST Rivals 2025 Season 2,bo3
+2025-11-13,FURIA,2,1,Vitality,BLAST Rivals 2025 Season 2,bo3
+2025-11-12,FURIA,2,1,paiN,BLAST Rivals 2025 Season 2,bo3
+2025-11-09,FURIA,3,0,Vitality,IEM Chengdu 2025,bo5
+2025-11-08,FURIA,2,0,Falcons,IEM Chengdu 2025,bo3
+2025-11-07,FURIA,2,0,The MongolZ,IEM Chengdu 2025,bo3
+2025-11-05,FURIA,1,2,MOUZ,IEM Chengdu 2025,bo3
+2025-11-04,FURIA,2,0,G2,IEM Chengdu 2025,bo3
+2025-10-20,FURIA,3,2,Natus Vincere,Thunderpick World Championship 2025,bo5
+2025-10-16,FURIA,2,0,The MongolZ,Thunderpick World Championship 2025,bo3
+2025-10-11,FURIA,1,2,Vitality,ESL Pro League Season 22,bo3
+2025-10-06,FURIA,0,2,G2,ESL Pro League Season 22,bo3
+2025-10-05,FURIA,2,0,3DMAX,ESL Pro League Season 22,bo3
+2025-10-03,FURIA,2,1,B8,ESL Pro League Season 22 Stage 1,bo3
+2025-09-22,FURIA,3,2,The MongolZ,FISSURE Playground 2,bo5
+2025-09-21,FURIA,2,0,Falcons,FISSURE Playground 2,bo3
+2025-09-17,FURIA,2,0,paiN,FISSURE Playground 2,bo3
+2025-09-15,FURIA,2,0,G2,FISSURE Playground 2,bo3
+2025-09-14,FURIA,2,1,Liquid,FISSURE Playground 2,bo3
+2025-09-07,FURIA,0,2,G2,BLAST Open London 2025 Finals,bo3
+2025-09-02,FURIA,2,0,MOUZ,BLAST Open London 2025,bo3
+2025-08-31,FURIA,2,0,Spirit,BLAST Open London 2025,bo3
+2025-08-10,FURIA,1,2,Liquid,BLAST Bounty 2025 Season 2,bo3
+2025-08-02,FURIA,1,2,MOUZ,IEM Cologne 2025,bo3
+2025-07-30,FURIA,2,0,G2,IEM Cologne 2025,bo3
+2025-07-29,FURIA,2,1,Falcons,IEM Cologne 2025,bo3
+2025-07-26,FURIA,0,2,G2,IEM Cologne 2025,bo3
+2025-06-20,FURIA,1,2,paiN,BLAST.tv Austin Major 2025,bo3
+2025-06-13,FURIA,13,11,The MongolZ,BLAST.tv Austin Major 2025,bo1
+2025-06-10,FURIA,2,1,B8,BLAST.tv Austin Major 2025 Stage 2,bo3
+2025-06-08,FURIA,11,13,paiN,BLAST.tv Austin Major 2025 Stage 2,bo1
+2025-05-20,FURIA,0,2,The MongolZ,IEM Dallas 2025,bo3
+2025-05-18,FURIA,1,2,Spirit,PGL Astana 2025,bo3
+2025-05-10,FURIA,1,2,The MongolZ,PGL Astana 2025,bo3
+2025-04-09,FURIA,0,2,The MongolZ,PGL Bucharest 2025,bo3
+2025-03-21,FURIA,0,2,Natus Vincere,BLAST Open Lisbon 2025,bo3
+2025-03-11,FURIA,1,2,Falcons,ESL Pro League Season 21,bo3
+2025-03-09,FURIA,0,2,Liquid,ESL Pro League Season 21,bo3
+2025-03-08,FURIA,1,2,MOUZ,ESL Pro League Season 21,bo3
+2025-02-02,FURIA,0,2,Natus Vincere,IEM Katowice 2025,bo3
+2025-12-05,Natus Vincere,13,6,PARIVISION,StarLadder Budapest Major 2025,bo1
+2025-12-05,Natus Vincere,2,13,FURIA,StarLadder Budapest Major 2025,bo1
+2025-12-01,Natus Vincere,2,0,B8,StarLadder Budapest Major 2025 Stage 2,bo3
+2025-11-30,Natus Vincere,13,10,Imperial,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-10-20,Natus Vincere,2,3,FURIA,Thunderpick World Championship 2025,bo5
+2025-10-19,Natus Vincere,2,1,The MongolZ,Thunderpick World Championship 2025,bo3
+2025-10-16,Natus Vincere,2,1,Imperial,Thunderpick World Championship 2025,bo3
+2025-10-10,Natus Vincere,1,2,MOUZ,ESL Pro League Season 22,bo3
+2025-10-08,Natus Vincere,2,0,The MongolZ,ESL Pro League Season 22,bo3
+2025-10-06,Natus Vincere,1,2,3DMAX,ESL Pro League Season 22,bo3
+2025-10-05,Natus Vincere,0,2,Falcons,ESL Pro League Season 22,bo3
+2025-09-20,Natus Vincere,2,0,Passion UA,StarLadder StarSeries Fall 2025,bo3
+2025-08-30,Natus Vincere,0,2,FaZe,BLAST Open London 2025,bo3
+2025-08-20,Natus Vincere,1,2,3DMAX,Esports World Cup 2025,bo3
+2025-08-03,Natus Vincere,1,2,Spirit,IEM Cologne 2025,bo3
+2025-08-02,Natus Vincere,2,0,The MongolZ,IEM Cologne 2025,bo3
+2025-07-30,Natus Vincere,2,0,FaZe,IEM Cologne 2025,bo3
+2025-07-28,Natus Vincere,0,2,MOUZ,IEM Cologne 2025,bo3
+2025-07-27,Natus Vincere,2,1,FaZe,IEM Cologne 2025,bo3
+2025-06-21,Natus Vincere,0,2,Vitality,BLAST.tv Austin Major 2025,bo3
+2025-06-15,Natus Vincere,2,1,G2,BLAST.tv Austin Major 2025,bo3
+2025-06-14,Natus Vincere,0,2,Spirit,BLAST.tv Austin Major 2025,bo3
+2025-06-13,Natus Vincere,16,14,3DMAX,BLAST.tv Austin Major 2025,bo1
+2025-05-12,Natus Vincere,0,2,The MongolZ,PGL Astana 2025,bo3
+2025-04-23,Natus Vincere,1,2,Liquid,IEM Melbourne 2025,bo3
+2025-04-22,Natus Vincere,1,2,Falcons,IEM Melbourne 2025,bo3
+2025-03-29,Natus Vincere,0,2,Spirit,BLAST Open Lisbon 2025,bo3
+2025-03-23,Natus Vincere,2,1,The MongolZ,BLAST Open Lisbon 2025,bo3
+2025-03-21,Natus Vincere,2,0,FURIA,BLAST Open Lisbon 2025,bo3
+2025-03-15,Natus Vincere,0,2,The MongolZ,ESL Pro League Season 21,bo3
+2025-03-11,Natus Vincere,2,0,G2,ESL Pro League Season 21,bo3
+2025-03-10,Natus Vincere,2,0,paiN,ESL Pro League Season 21,bo3
+2025-02-09,Natus Vincere,0,2,Spirit,IEM Katowice 2025,bo3
+2025-02-05,Natus Vincere,2,0,The MongolZ,IEM Katowice 2025,bo3
+2025-02-04,Natus Vincere,2,1,Spirit,IEM Katowice 2025,bo3
+2025-02-02,Natus Vincere,2,0,FURIA,IEM Katowice 2025,bo3
+2025-01-26,Natus Vincere,0,2,Spirit,BLAST Bounty 2025 Season 1 Finals,bo3
+2025-01-25,Natus Vincere,2,1,paiN,BLAST Bounty 2025 Season 1 Finals,bo3
+2025-12-05,Vitality,13,4,3DMAX,StarLadder Budapest Major 2025,bo1
+2025-12-04,Vitality,7,13,FaZe,StarLadder Budapest Major 2025,bo1
+2025-11-15,Vitality,0,2,Falcons,BLAST Rivals 2025 Season 2,bo3
+2025-11-14,Vitality,2,1,Spirit,BLAST Rivals 2025 Season 2,bo3
+2025-11-13,Vitality,1,2,FURIA,BLAST Rivals 2025 Season 2,bo3
+2025-11-09,Vitality,0,3,FURIA,IEM Chengdu 2025,bo5
+2025-11-08,Vitality,2,1,MOUZ,IEM Chengdu 2025,bo3
+2025-11-05,Vitality,2,0,G2,IEM Chengdu 2025,bo3
+2025-11-04,Vitality,1,2,MOUZ,IEM Chengdu 2025,bo3
+2025-10-13,Vitality,3,0,Falcons,ESL Pro League Season 22,bo5
+2025-10-12,Vitality,2,1,FaZe,ESL Pro League Season 22,bo3
+2025-10-11,Vitality,2,1,FURIA,ESL Pro League Season 22,bo3
+2025-10-08,Vitality,2,0,G2,ESL Pro League Season 22,bo3
+2025-09-08,Vitality,2,3,G2,BLAST Open London 2025 Finals,bo5
+2025-09-07,Vitality,2,0,MOUZ,BLAST Open London 2025 Finals,bo3
+2025-09-01,Vitality,2,1,FaZe,BLAST Open London 2025,bo3
+2025-08-24,Vitality,1,2,Falcons,Esports World Cup 2025,bo3
+2025-08-24,Vitality,1,2,The MongolZ,Esports World Cup 2025,bo3
+2025-08-21,Vitality,2,0,Liquid,Esports World Cup 2025,bo3
+2025-08-17,Vitality,0,2,The MongolZ,BLAST Bounty 2025 Season 2 Finals,bo3
+2025-08-16,Vitality,2,0,Liquid,BLAST Bounty 2025 Season 2 Finals,bo3
+2025-08-03,Vitality,0,2,MOUZ,IEM Cologne 2025,bo3
+2025-07-30,Vitality,2,0,The MongolZ,IEM Cologne 2025,bo3
+2025-07-28,Vitality,2,0,G2,IEM Cologne 2025,bo3
+2025-06-23,Vitality,2,1,The MongolZ,BLAST.tv Austin Major 2025,bo3
+2025-06-22,Vitality,2,1,MOUZ,BLAST.tv Austin Major 2025,bo3
+2025-06-21,Vitality,2,0,Natus Vincere,BLAST.tv Austin Major 2025,bo3
+2025-06-13,Vitality,13,2,3DMAX,BLAST.tv Austin Major 2025,bo1
+2025-05-26,Vitality,3,0,MOUZ,IEM Dallas 2025,bo5
+2025-05-25,Vitality,2,1,Falcons,IEM Dallas 2025,bo3
+2025-05-22,Vitality,2,1,The MongolZ,IEM Dallas 2025,bo3
+2025-05-05,Vitality,3,2,Falcons,BLAST Rivals 2025 Season 1,bo5
+2025-05-04,Vitality,2,0,Spirit,BLAST Rivals 2025 Season 1,bo3
+2025-05-01,Vitality,2,1,MOUZ,BLAST Rivals 2025 Season 1,bo3
+2025-04-27,Vitality,3,2,Falcons,IEM Melbourne 2025,bo5
+2025-04-26,Vitality,2,0,The MongolZ,IEM Melbourne 2025,bo3
+2025-04-23,Vitality,2,0,Falcons,IEM Melbourne 2025,bo3
+2025-04-22,Vitality,2,0,Liquid,IEM Melbourne 2025,bo3
+2025-03-31,Vitality,3,2,MOUZ,BLAST Open Lisbon 2025,bo5
+2025-03-30,Vitality,2,1,Spirit,BLAST Open Lisbon 2025,bo3
+2025-03-24,Vitality,2,0,MOUZ,BLAST Open Lisbon 2025,bo3
+2025-03-17,Vitality,3,0,MOUZ,ESL Pro League Season 21,bo5
+2025-03-16,Vitality,2,1,The MongolZ,ESL Pro League Season 21,bo3
+2025-03-15,Vitality,2,0,Liquid,ESL Pro League Season 21,bo3
+2025-03-10,Vitality,2,0,MOUZ,ESL Pro League Season 21,bo3
+2025-03-09,Vitality,2,0,3DMAX,ESL Pro League Season 21,bo3
+2025-02-10,Vitality,3,0,Spirit,IEM Katowice 2025,bo5
+2025-02-09,Vitality,2,0,The MongolZ,IEM Katowice 2025,bo3
+2025-02-03,Vitality,2,1,FaZe,IEM Katowice 2025,bo3
+2025-02-01,Vitality,2,0,3DMAX,IEM Katowice 2025,bo3
+2025-12-05,FaZe,5,13,Spirit,StarLadder Budapest Major 2025,bo1
+2025-12-04,FaZe,13,7,Vitality,StarLadder Budapest Major 2025,bo1
+2025-11-30,FaZe,13,10,Passion UA,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-10-12,FaZe,0,2,MOUZ,ESL Pro League Season 22,bo3
+2025-10-12,FaZe,1,2,Vitality,ESL Pro League Season 22,bo3
+2025-10-11,FaZe,2,0,Spirit,ESL Pro League Season 22,bo3
+2025-10-06,FaZe,0,2,3DMAX,ESL Pro League Season 22,bo3
+2025-09-17,FaZe,1,2,The MongolZ,FISSURE Playground 2,bo3
+2025-09-16,FaZe,0,2,Falcons,FISSURE Playground 2,bo3
+2025-09-14,FaZe,2,1,3DMAX,FISSURE Playground 2,bo3
+2025-09-14,FaZe,2,0,paiN,FISSURE Playground 2,bo3
+2025-09-06,FaZe,0,2,G2,BLAST Open London 2025 Finals,bo3
+2025-09-01,FaZe,1,2,Vitality,BLAST Open London 2025,bo3
+2025-08-30,FaZe,2,0,Natus Vincere,BLAST Open London 2025,bo3
+2025-07-30,FaZe,0,2,Natus Vincere,IEM Cologne 2025,bo3
+2025-07-27,FaZe,1,2,Natus Vincere,IEM Cologne 2025,bo3
+2025-06-21,FaZe,0,2,The MongolZ,BLAST.tv Austin Major 2025,bo3
+2025-06-15,FaZe,2,0,The MongolZ,BLAST.tv Austin Major 2025,bo3
+2025-06-13,FaZe,13,10,MOUZ,BLAST.tv Austin Major 2025,bo1
+2025-06-10,FaZe,0,2,3DMAX,BLAST.tv Austin Major 2025 Stage 2,bo3
+2025-05-01,FaZe,0,2,Falcons,BLAST Rivals 2025 Season 1,bo3
+2025-04-21,FaZe,2,0,paiN,IEM Melbourne 2025,bo3
+2025-04-13,FaZe,1,2,Falcons,PGL Bucharest 2025,bo3
+2025-04-07,FaZe,2,0,paiN,PGL Bucharest 2025,bo3
+2025-03-24,FaZe,0,2,Spirit,BLAST Open Lisbon 2025,bo3
+2025-02-23,FaZe,0,2,Falcons,PGL Cluj-Napoca 2025,bo3
+2025-02-16,FaZe,2,0,MOUZ,PGL Cluj-Napoca 2025,bo3
+2025-02-04,FaZe,2,1,G2,IEM Katowice 2025,bo3
+2025-02-03,FaZe,1,2,Vitality,IEM Katowice 2025,bo3
+2025-01-19,FaZe,0,2,paiN,BLAST Bounty 2025 Season 1,bo3+
+2025-12-05,Falcons,13,5,Passion UA,StarLadder Budapest Major 2025,bo1
+2025-12-05,Falcons,10,13,B8,StarLadder Budapest Major 2025,bo1
+2025-11-16,Falcons,1,3,FURIA,BLAST Rivals 2025 Season 2,bo5
+2025-11-15,Falcons,2,0,Vitality,BLAST Rivals 2025 Season 2,bo3
+2025-11-13,Falcons,2,0,Passion UA,BLAST Rivals 2025 Season 2,bo3
+2025-11-12,Falcons,2,0,Spirit,BLAST Rivals 2025 Season 2,bo3
+2025-11-09,Falcons,2,1,MOUZ,IEM Chengdu 2025,bo3
+2025-11-08,Falcons,0,2,FURIA,IEM Chengdu 2025,bo3
+2025-11-04,Falcons,2,0,Spirit,IEM Chengdu 2025,bo3
+2025-10-13,Falcons,0,3,Vitality,ESL Pro League Season 22,bo5
+2025-10-11,Falcons,2,0,MOUZ,ESL Pro League Season 22,bo3
+2025-10-10,Falcons,2,1,3DMAX,ESL Pro League Season 22,bo3
+2025-10-07,Falcons,2,1,MOUZ,ESL Pro League Season 22,bo3
+2025-10-05,Falcons,2,0,Natus Vincere,ESL Pro League Season 22,bo3
+2025-09-21,Falcons,0,2,FURIA,FISSURE Playground 2,bo3
+2025-09-20,Falcons,2,0,paiN,FISSURE Playground 2,bo3
+2025-09-16,Falcons,2,0,FaZe,FISSURE Playground 2,bo3
+2025-08-24,Falcons,2,1,Vitality,Esports World Cup 2025,bo3
+2025-08-23,Falcons,2,1,MOUZ,Esports World Cup 2025,bo3
+2025-08-21,Falcons,2,0,G2,Esports World Cup 2025,bo3
+2025-07-29,Falcons,1,2,FURIA,IEM Cologne 2025,bo3
+2025-07-27,Falcons,0,2,The MongolZ,IEM Cologne 2025,bo3
+2025-05-25,Falcons,1,2,Vitality,IEM Dallas 2025,bo3
+2025-05-22,Falcons,0,2,MOUZ,IEM Dallas 2025,bo3
+2025-05-05,Falcons,2,3,Vitality,BLAST Rivals 2025 Season 1,bo5
+2025-05-04,Falcons,2,0,MOUZ,BLAST Rivals 2025 Season 1,bo3
+2025-05-02,Falcons,2,1,Spirit,BLAST Rivals 2025 Season 1,bo3
+2025-05-01,Falcons,2,0,FaZe,BLAST Rivals 2025 Season 1,bo3
+2025-04-27,Falcons,2,3,Vitality,IEM Melbourne 2025,bo5
+2025-04-26,Falcons,2,0,MOUZ,IEM Melbourne 2025,bo3
+2025-04-23,Falcons,0,2,Vitality,IEM Melbourne 2025,bo3
+2025-04-22,Falcons,2,1,Natus Vincere,IEM Melbourne 2025,bo3
+2025-04-14,Falcons,3,0,G2,PGL Bucharest 2025,bo5
+2025-04-13,Falcons,2,1,FaZe,PGL Bucharest 2025,bo3
+2025-04-10,Falcons,2,1,The MongolZ,PGL Bucharest 2025,bo3
+2025-04-08,Falcons,2,1,paiN,PGL Bucharest 2025,bo3
+2025-03-19,Falcons,0,2,MOUZ,BLAST Open Lisbon 2025,bo3
+2025-03-11,Falcons,2,1,FURIA,ESL Pro League Season 21,bo3
+2025-03-09,Falcons,1,2,3DMAX,ESL Pro League Season 21,bo3
+2025-03-09,Falcons,0,2,MOUZ,ESL Pro League Season 21,bo3
+2025-03-08,Falcons,2,1,Liquid,ESL Pro League Season 21,bo3
+2025-02-24,Falcons,1,3,MOUZ,PGL Cluj-Napoca 2025,bo5
+2025-02-23,Falcons,2,0,FaZe,PGL Cluj-Napoca 2025,bo3
+2025-02-17,Falcons,2,1,MOUZ,PGL Cluj-Napoca 2025,bo3
+2025-02-16,Falcons,1,2,paiN,PGL Cluj-Napoca 2025,bo3
+2025-02-03,Falcons,1,2,G2,IEM Katowice 2025,bo3
+2025-12-05,B8,6,13,MOUZ,StarLadder Budapest Major 2025,bo1
+2025-12-05,B8,13,10,Falcons,StarLadder Budapest Major 2025,bo1
+2025-12-02,B8,2,1,3DMAX,StarLadder Budapest Major 2025 Stage 2,bo3
+2025-12-01,B8,0,2,Natus Vincere,StarLadder Budapest Major 2025 Stage 2,bo3
+2025-11-25,B8,13,11,PARIVISION,StarLadder Budapest Major 2025 Stage 1,bo1
+2025-10-29,B8,0,2,paiN,PGL Masters Bucharest 2025,bo3
+2025-10-28,B8,2,0,3DMAX,PGL Masters Bucharest 2025,bo3
+2025-10-15,B8,1,2,FaZe,CS Asia Championships 2025,bo3
+2025-10-03,B8,1,2,FURIA,ESL Pro League Season 22 Stage 1,bo3
+2025-09-30,B8,2,1,G2,ESL Pro League Season 22 Stage 1,bo3
+2025-09-20,B8,2,0,Passion UA,StarLadder StarSeries Fall 2025,bo3
+2025-09-18,B8,0,2,PARIVISION,StarLadder StarSeries Fall 2025,bo3
+2025-08-10,B8,0,2,MOUZ,BLAST Bounty 2025 Season 2,bo3
+2025-06-10,B8,1,2,FURIA,BLAST.tv Austin Major 2025 Stage 2,bo3
+2025-06-07,B8,13,8,Falcons,BLAST.tv Austin Major 2025 Stage 2,bo1
+2025-06-04,B8,13,11,Imperial,BLAST.tv Austin Major 2025 Stage 1,bo1
+2025-05-12,B8,3,2,PARIVISION,ESL Challenger League Season 49 Europe,bo5
+2025-04-15,B8,2,1,PARIVISION,BLAST.tv Austin Major 2025 Europe Regional Qualifier,bo3
+2025-12-05,The MongolZ,13,9,Liquid,StarLadder Budapest Major 2025,bo1
+2025-12-04,The MongolZ,14,16,Imperial,StarLadder Budapest Major 2025,bo1
+2025-11-13,The MongolZ,0,2,Spirit,BLAST Rivals 2025 Season 2,bo3
+2025-11-12,The MongolZ,1,2,Passion UA,BLAST Rivals 2025 Season 2,bo3
+2025-11-07,The MongolZ,0,2,FURIA,IEM Chengdu 2025,bo3
+2025-11-05,The MongolZ,2,1,Spirit,IEM Chengdu 2025,bo3
+2025-11-05,The MongolZ,2,1,paiN,IEM Chengdu 2025,bo3
+2025-10-19,The MongolZ,1,2,Natus Vincere,Thunderpick World Championship 2025,bo3
+2025-10-16,The MongolZ,0,2,FURIA,Thunderpick World Championship 2025,bo3
+2025-10-08,The MongolZ,0,2,Natus Vincere,ESL Pro League Season 22,bo3
+2025-09-22,The MongolZ,2,3,FURIA,FISSURE Playground 2,bo5
+2025-09-20,The MongolZ,2,1,Liquid,FISSURE Playground 2,bo3
+2025-09-19,The MongolZ,2,1,G2,FISSURE Playground 2,bo3
+2025-09-17,The MongolZ,2,1,FaZe,FISSURE Playground 2,bo3
+2025-09-12,The MongolZ,1,2,3DMAX,FISSURE Playground 2,bo3
+2025-08-24,The MongolZ,2,1,Vitality,Esports World Cup 2025,bo3
+2025-08-22,The MongolZ,2,1,3DMAX,Esports World Cup 2025,bo3
+2025-08-18,The MongolZ,0,3,Spirit,BLAST Bounty 2025 Season 2 Finals,bo5
+2025-08-17,The MongolZ,2,0,Vitality,BLAST Bounty 2025 Season 2 Finals,bo3
+2025-08-10,The MongolZ,2,0,paiN,BLAST Bounty 2025 Season 2,bo3
+2025-08-02,The MongolZ,0,2,Natus Vincere,IEM Cologne 2025,bo3
+2025-07-30,The MongolZ,0,2,Vitality,IEM Cologne 2025,bo3
+2025-07-27,The MongolZ,2,0,Falcons,IEM Cologne 2025,bo3
+2025-07-26,The MongolZ,2,0,3DMAX,IEM Cologne 2025,bo3
+2025-06-23,The MongolZ,1,2,Vitality,BLAST.tv Austin Major 2025,bo3
+2025-06-22,The MongolZ,2,0,paiN,BLAST.tv Austin Major 2025,bo3
+2025-06-21,The MongolZ,2,0,FaZe,BLAST.tv Austin Major 2025,bo3
+2025-06-16,The MongolZ,2,0,G2,BLAST.tv Austin Major 2025,bo3
+2025-06-15,The MongolZ,0,2,FaZe,BLAST.tv Austin Major 2025,bo3
+2025-06-13,The MongolZ,11,13,FURIA,BLAST.tv Austin Major 2025,bo1
+2025-05-22,The MongolZ,1,2,Vitality,IEM Dallas 2025,bo3
+2025-05-21,The MongolZ,2,0,G2,IEM Dallas 2025,bo3
+2025-05-20,The MongolZ,2,0,FURIA,IEM Dallas 2025,bo3
+2025-05-12,The MongolZ,2,0,Natus Vincere,PGL Astana 2025,bo3
+2025-05-10,The MongolZ,2,1,FURIA,PGL Astana 2025,bo3
+2025-04-26,The MongolZ,0,2,Vitality,IEM Melbourne 2025,bo3
+2025-04-22,The MongolZ,2,0,FaZe,IEM Melbourne 2025,bo3
+2025-04-10,The MongolZ,1,2,Falcons,PGL Bucharest 2025,bo3
+2025-04-09,The MongolZ,2,0,FURIA,PGL Bucharest 2025,bo3
+2025-04-09,The MongolZ,2,0,Liquid,PGL Bucharest 2025,bo3
+2025-03-25,The MongolZ,0,2,G2,BLAST Open Lisbon 2025,bo3
+2025-03-24,The MongolZ,2,0,Liquid,BLAST Open Lisbon 2025,bo3
+2025-03-23,The MongolZ,1,2,Natus Vincere,BLAST Open Lisbon 2025,bo3
+2025-03-16,The MongolZ,1,2,Vitality,ESL Pro League Season 21,bo3
+2025-03-15,The MongolZ,2,0,Natus Vincere,ESL Pro League Season 21,bo3
+2025-03-10,The MongolZ,2,0,3DMAX,ESL Pro League Season 21,bo3
+2025-03-09,The MongolZ,0,2,Spirit,ESL Pro League Season 21,bo3
+2025-03-08,The MongolZ,2,1,G2,ESL Pro League Season 21,bo3
+2025-02-17,The MongolZ,2,1,paiN,PGL Cluj-Napoca 2025,bo3
+2025-02-09,The MongolZ,0,2,Vitality,IEM Katowice 2025,bo3
+2025-02-05,The MongolZ,0,2,Natus Vincere,IEM Katowice 2025,bo3
+2025-02-03,The MongolZ,2,0,GamerLegion,IEM Katowice 2025,bo3
+2025-12-05,Imperial,5,13,FURIA,StarLadder Budapest Major 2025,bo1
+2025-12-04,Imperial,16,14,The MongolZ,StarLadder Budapest Major 2025,bo1
+2025-11-30,Imperial,10,13,Natus Vincere,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-10-16,Imperial,1,2,Natus Vincere,Thunderpick World Championship 2025,bo3
+2025-08-30,Imperial,1,2,Liquid,BLAST Open London 2025,bo3
+2025-08-28,Imperial,1,2,MOUZ,BLAST Open London 2025,bo3
+2025-06-04,Imperial,11,13,B8,BLAST.tv Austin Major 2025 Stage 1,bo1
+2025-03-22,Imperial,1,2,Liquid,BLAST Open Lisbon 2025,bo3
+2025-03-20,Imperial,0,2,G2,BLAST Open Lisbon 2025,bo3
+2025-02-10,Imperial,2,0,paiN,ACE SA Masters 2025 Season 1 - BLAST Premier Rising Event,bo3
+2025-12-05,MOUZ,13,6,B8,StarLadder Budapest Major 2025,bo1
+2025-12-04,MOUZ,16,14,PARIVISION,StarLadder Budapest Major 2025,bo1
+2025-11-09,MOUZ,1,2,Falcons,IEM Chengdu 2025,bo3
+2025-11-08,MOUZ,1,2,Vitality,IEM Chengdu 2025,bo3
+2025-11-05,MOUZ,2,1,FURIA,IEM Chengdu 2025,bo3
+2025-11-04,MOUZ,2,1,Vitality,IEM Chengdu 2025,bo3
+2025-11-03,MOUZ,2,0,FaZe,IEM Chengdu 2025,bo3
+2025-10-12,MOUZ,2,0,FaZe,ESL Pro League Season 22,bo3
+2025-10-11,MOUZ,0,2,Falcons,ESL Pro League Season 22,bo3
+2025-10-10,MOUZ,2,1,Natus Vincere,ESL Pro League Season 22,bo3
+2025-10-08,MOUZ,2,0,3DMAX,ESL Pro League Season 22,bo3
+2025-10-07,MOUZ,1,2,Falcons,ESL Pro League Season 22,bo3
+2025-09-07,MOUZ,0,2,Vitality,BLAST Open London 2025 Finals,bo3
+2025-09-02,MOUZ,0,2,FURIA,BLAST Open London 2025,bo3
+2025-08-31,MOUZ,2,0,G2,BLAST Open London 2025,bo3
+2025-08-28,MOUZ,2,1,Imperial,BLAST Open London 2025,bo3
+2025-08-23,MOUZ,1,2,Falcons,Esports World Cup 2025,bo3
+2025-08-10,MOUZ,2,0,B8,BLAST Bounty 2025 Season 2,bo3
+2025-08-04,MOUZ,0,3,Spirit,IEM Cologne 2025,bo5
+2025-08-03,MOUZ,2,0,Vitality,IEM Cologne 2025,bo3
+2025-08-02,MOUZ,2,1,FURIA,IEM Cologne 2025,bo3
+2025-07-30,MOUZ,1,2,Spirit,IEM Cologne 2025,bo3
+2025-07-28,MOUZ,2,0,Natus Vincere,IEM Cologne 2025,bo3
+2025-07-27,MOUZ,2,0,Liquid,IEM Cologne 2025,bo3
+2025-06-22,MOUZ,1,2,Vitality,BLAST.tv Austin Major 2025,bo3
+2025-06-20,MOUZ,2,1,Spirit,BLAST.tv Austin Major 2025,bo3
+2025-06-13,MOUZ,10,13,FaZe,BLAST.tv Austin Major 2025,bo1
+2025-05-26,MOUZ,0,3,Vitality,IEM Dallas 2025,bo5
+2025-05-25,MOUZ,2,0,The MongolZ,IEM Dallas 2025,bo3
+2025-05-22,MOUZ,2,0,Falcons,IEM Dallas 2025,bo3
+2025-05-21,MOUZ,2,0,Liquid,IEM Dallas 2025,bo3
+2025-05-04,MOUZ,0,2,Falcons,BLAST Rivals 2025 Season 1,bo3
+2025-05-02,MOUZ,2,0,FaZe,BLAST Rivals 2025 Season 1,bo3
+2025-05-01,MOUZ,1,2,Vitality,BLAST Rivals 2025 Season 1,bo3
+2025-04-30,MOUZ,2,1,paiN,BLAST Rivals 2025 Season 1,bo3
+2025-04-26,MOUZ,0,2,Falcons,IEM Melbourne 2025,bo3
+2025-04-23,MOUZ,2,0,The MongolZ,IEM Melbourne 2025,bo3
+2025-03-31,MOUZ,2,3,Vitality,BLAST Open Lisbon 2025,bo5
+2025-03-29,MOUZ,2,0,G2,BLAST Open Lisbon 2025,bo3
+2025-03-24,MOUZ,0,2,Vitality,BLAST Open Lisbon 2025,bo3
+2025-03-22,MOUZ,2,1,Spirit,BLAST Open Lisbon 2025,bo3
+2025-03-19,MOUZ,2,0,Falcons,BLAST Open Lisbon 2025,bo3
+2025-03-17,MOUZ,0,3,Vitality,ESL Pro League Season 21,bo5
+2025-03-16,MOUZ,2,1,Spirit,ESL Pro League Season 21,bo3
+2025-03-14,MOUZ,2,1,G2,ESL Pro League Season 21,bo3
+2025-03-11,MOUZ,2,0,Liquid,ESL Pro League Season 21,bo3
+2025-03-10,MOUZ,0,2,Vitality,ESL Pro League Season 21,bo3
+2025-03-09,MOUZ,2,0,Falcons,ESL Pro League Season 21,bo3
+2025-03-08,MOUZ,2,1,FURIA,ESL Pro League Season 21,bo3
+2025-02-24,MOUZ,3,1,Falcons,PGL Cluj-Napoca 2025,bo5
+2025-02-23,MOUZ,2,1,Astralis,PGL Cluj-Napoca 2025,bo3
+2025-02-21,MOUZ,2,0,paiN,PGL Cluj-Napoca 2025,bo3
+2025-02-17,MOUZ,1,2,Falcons,PGL Cluj-Napoca 2025,bo3
+2025-02-16,MOUZ,0,2,FaZe,PGL Cluj-Napoca 2025,bo3
+2025-02-15,MOUZ,2,0,3DMAX,PGL Cluj-Napoca 2025,bo3
+2025-02-03,MOUZ,0,2,Liquid,IEM Katowice 2025,bo3
+2025-12-05,PARIVISION,6,13,Natus Vincere,StarLadder Budapest Major 2025,bo1
+2025-12-04,PARIVISION,14,16,MOUZ,StarLadder Budapest Major 2025,bo1
+2025-11-30,PARIVISION,13,3,Liquid,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-11-25,PARIVISION,11,13,B8,StarLadder Budapest Major 2025 Stage 1,bo1
+2025-09-18,PARIVISION,2,0,B8,StarLadder StarSeries Fall 2025,bo3
+2025-05-12,PARIVISION,3,2,B8,ESL Challenger League Season 49 Europe,bo5
+2025-04-15,PARIVISION,1,2,B8,BLAST.tv Austin Major 2025 Europe Regional Qualifier,bo3
+2025-12-05,Spirit,13,5,FaZe,StarLadder Budapest Major 2025,bo1
+2025-12-04,Spirit,13,8,Liquid,StarLadder Budapest Major 2025,bo1
+2025-11-14,Spirit,1,2,Vitality,BLAST Rivals 2025 Season 2,bo3
+2025-11-13,Spirit,2,0,The MongolZ,BLAST Rivals 2025 Season 2,bo3
+2025-11-12,Spirit,0,2,Falcons,BLAST Rivals 2025 Season 2,bo3
+2025-11-05,Spirit,1,2,The MongolZ,IEM Chengdu 2025,bo3
+2025-11-04,Spirit,0,2,Falcons,IEM Chengdu 2025,bo3
+2025-11-03,Spirit,2,0,paiN,IEM Chengdu 2025,bo3
+2025-10-11,Spirit,0,2,FaZe,ESL Pro League Season 22,bo3
+2025-10-07,Spirit,2,0,G2,ESL Pro League Season 22,bo3
+2025-09-02,Spirit,1,2,G2,BLAST Open London 2025,bo3
+2025-09-01,Spirit,2,0,Liquid,BLAST Open London 2025,bo3
+2025-08-31,Spirit,0,2,FURIA,BLAST Open London 2025,bo3
+2025-08-18,Spirit,3,0,The MongolZ,BLAST Bounty 2025 Season 2 Finals,bo5
+2025-08-17,Spirit,2,0,MOUZ,BLAST Bounty 2025 Season 2 Finals,bo3
+2025-08-10,Spirit,2,1,G2,BLAST Bounty 2025 Season 2,bo3
+2025-08-07,Spirit,2,1,Passion UA,BLAST Bounty 2025 Season 2,bo3
+2025-08-04,Spirit,3,0,MOUZ,IEM Cologne 2025,bo5
+2025-08-03,Spirit,2,1,Natus Vincere,IEM Cologne 2025,bo3
+2025-07-30,Spirit,2,1,MOUZ,IEM Cologne 2025,bo3
+2025-06-20,Spirit,1,2,MOUZ,BLAST.tv Austin Major 2025,bo3
+2025-06-14,Spirit,2,0,Natus Vincere,BLAST.tv Austin Major 2025,bo3
+2025-06-13,Spirit,13,3,paiN,BLAST.tv Austin Major 2025,bo1
+2025-05-18,Spirit,2,1,FURIA,PGL Astana 2025,bo3
+2025-05-04,Spirit,0,2,Vitality,BLAST Rivals 2025 Season 1,bo3
+2025-05-02,Spirit,1,2,Falcons,BLAST Rivals 2025 Season 1,bo3
+2025-03-30,Spirit,1,2,Vitality,BLAST Open Lisbon 2025,bo3
+2025-03-29,Spirit,2,0,Natus Vincere,BLAST Open Lisbon 2025,bo3
+2025-03-24,Spirit,2,0,FaZe,BLAST Open Lisbon 2025,bo3
+2025-03-22,Spirit,1,2,MOUZ,BLAST Open Lisbon 2025,bo3
+2025-03-16,Spirit,1,2,MOUZ,ESL Pro League Season 21,bo3
+2025-03-09,Spirit,2,0,The MongolZ,ESL Pro League Season 21,bo3
+2025-02-10,Spirit,0,3,Vitality,IEM Katowice 2025,bo5
+2025-02-09,Spirit,2,0,Natus Vincere,IEM Katowice 2025,bo3
+2025-02-04,Spirit,2,0,Liquid,IEM Katowice 2025,bo3
+2025-02-04,Spirit,1,2,Natus Vincere,IEM Katowice 2025,bo3
+2025-01-26,Spirit,2,0,Natus Vincere,BLAST Bounty 2025 Season 1 Finals,bo3
+2025-12-05,Liquid,9,13,The MongolZ,StarLadder Budapest Major 2025,bo1
+2025-12-04,Liquid,8,13,Spirit,StarLadder Budapest Major 2025,bo1
+2025-11-30,Liquid,3,13,PARIVISION,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-11-29,Liquid,7,13,B8,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-09-20,Liquid,1,2,The MongolZ,FISSURE Playground 2,bo3
+2025-09-17,Liquid,2,0,FaZe,FISSURE Playground 2,bo3
+2025-09-14,Liquid,1,2,FURIA,FISSURE Playground 2,bo3
+2025-09-01,Liquid,0,2,Spirit,BLAST Open London 2025,bo3
+2025-08-30,Liquid,2,1,Imperial,BLAST Open London 2025,bo3
+2025-08-28,Liquid,0,2,G2,BLAST Open London 2025,bo3
+2025-08-21,Liquid,0,2,Vitality,Esports World Cup 2025,bo3
+2025-08-16,Liquid,0,2,Vitality,BLAST Bounty 2025 Season 2 Finals,bo3
+2025-08-10,Liquid,2,1,FURIA,BLAST Bounty 2025 Season 2,bo3
+2025-07-28,Liquid,0,2,FaZe,IEM Cologne 2025,bo3
+2025-07-27,Liquid,0,2,MOUZ,IEM Cologne 2025,bo3
+2025-07-25,Liquid,1,2,FaZe,IEM Cologne 2025 Stage 1,bo3
+2025-06-14,Liquid,1,2,MOUZ,BLAST.tv Austin Major 2025,bo3
+2025-06-13,Liquid,7,13,The MongolZ,BLAST.tv Austin Major 2025,bo1
+2025-05-21,Liquid,0,2,MOUZ,IEM Dallas 2025,bo3
+2025-05-20,Liquid,2,0,FaZe,IEM Dallas 2025,bo3
+2025-04-25,Liquid,1,2,The MongolZ,IEM Melbourne 2025,bo3
+2025-04-23,Liquid,2,1,Natus Vincere,IEM Melbourne 2025,bo3
+2025-04-22,Liquid,0,2,Vitality,IEM Melbourne 2025,bo3
+2025-04-09,Liquid,0,2,The MongolZ,PGL Bucharest 2025,bo3
+2025-03-24,Liquid,0,2,The MongolZ,BLAST Open Lisbon 2025,bo3
+2025-03-22,Liquid,2,1,Imperial,BLAST Open Lisbon 2025,bo3
+2025-03-15,Liquid,0,2,Vitality,ESL Pro League Season 21,bo3
+2025-03-11,Liquid,0,2,MOUZ,ESL Pro League Season 21,bo3
+2025-03-10,Liquid,2,0,Eternal Fire,ESL Pro League Season 21,bo3
+2025-03-09,Liquid,2,0,FURIA,ESL Pro League Season 21,bo3
+2025-03-08,Liquid,1,2,Falcons,ESL Pro League Season 21,bo3
+2025-02-04,Liquid,0,2,Spirit,IEM Katowice 2025,bo3
+2025-02-03,Liquid,2,0,MOUZ,IEM Katowice 2025,bo3
+2025-02-02,Liquid,1,2,The MongolZ,IEM Katowice 2025,bo3
+2025-12-05,G2,13,7,paiN,StarLadder Budapest Major 2025,bo1
+2025-12-04,G2,13,8,Passion UA,StarLadder Budapest Major 2025,bo1
+2025-11-05,G2,0,2,Vitality,IEM Chengdu 2025,bo3
+2025-11-04,G2,0,2,FURIA,IEM Chengdu 2025,bo3
+2025-11-03,G2,2,0,3DMAX,IEM Chengdu 2025,bo3
+2025-10-08,G2,0,2,3DMAX,ESL Pro League Season 22,bo3
+2025-10-08,G2,0,2,Vitality,ESL Pro League Season 22,bo3
+2025-10-07,G2,0,2,Spirit,ESL Pro League Season 22,bo3
+2025-10-06,G2,2,0,FURIA,ESL Pro League Season 22,bo3
+2025-10-04,G2,1,0,FaZe,ESL Pro League Season 22,bo1
+2025-09-30,G2,1,2,B8,ESL Pro League Season 22 Stage 1,bo3
+2025-09-19,G2,1,2,The MongolZ,FISSURE Playground 2,bo3
+2025-09-15,G2,0,2,FURIA,FISSURE Playground 2,bo3
+2025-09-08,G2,3,2,Vitality,BLAST Open London 2025 Finals,bo5
+2025-09-07,G2,2,0,FURIA,BLAST Open London 2025 Finals,bo3
+2025-09-06,G2,2,0,FaZe,BLAST Open London 2025 Finals,bo3
+2025-09-02,G2,2,1,Spirit,BLAST Open London 2025,bo3
+2025-08-31,G2,0,2,MOUZ,BLAST Open London 2025,bo3
+2025-08-28,G2,2,0,Liquid,BLAST Open London 2025,bo3
+2025-08-21,G2,0,2,Falcons,Esports World Cup 2025,bo3
+2025-08-10,G2,1,2,Spirit,BLAST Bounty 2025 Season 2,bo3
+2025-07-30,G2,0,2,FURIA,IEM Cologne 2025,bo3
+2025-07-29,G2,2,0,3DMAX,IEM Cologne 2025,bo3
+2025-07-28,G2,0,2,Vitality,IEM Cologne 2025,bo3
+2025-07-26,G2,2,0,FURIA,IEM Cologne 2025,bo3
+2025-06-16,G2,0,2,The MongolZ,BLAST.tv Austin Major 2025,bo3
+2025-06-15,G2,1,2,Natus Vincere,BLAST.tv Austin Major 2025,bo3
+2025-06-13,G2,13,6,paiN,BLAST.tv Austin Major 2025,bo1
+2025-06-13,G2,5,13,3DMAX,BLAST.tv Austin Major 2025,bo1
+2025-05-22,G2,2,1,3DMAX,IEM Dallas 2025,bo3
+2025-05-21,G2,0,2,The MongolZ,IEM Dallas 2025,bo3
+2025-04-14,G2,0,3,Falcons,PGL Bucharest 2025,bo5
+2025-03-29,G2,0,2,MOUZ,BLAST Open Lisbon 2025,bo3
+2025-03-25,G2,2,0,The MongolZ,BLAST Open Lisbon 2025,bo3
+2025-03-20,G2,2,0,Imperial,BLAST Open Lisbon 2025,bo3
+2025-03-14,G2,1,2,MOUZ,ESL Pro League Season 21,bo3
+2025-03-11,G2,0,2,Natus Vincere,ESL Pro League Season 21,bo3
+2025-03-08,G2,1,2,The MongolZ,ESL Pro League Season 21,bo3
+2025-03-08,G2,2,0,paiN,ESL Pro League Season 21,bo3
+2025-02-04,G2,1,2,FaZe,IEM Katowice 2025,bo3
+2025-02-03,G2,2,1,Falcons,IEM Katowice 2025,bo3
+2025-01-18,G2,2,1,B8,BLAST Bounty 2025 Season 1,bo3
+2025-12-05,Passion UA,5,13,Falcons,StarLadder Budapest Major 2025,bo1
+2025-12-04,Passion UA,8,13,G2,StarLadder Budapest Major 2025,bo1
+2025-11-30,Passion UA,3,13,3DMAX,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-11-29,Passion UA,10,13,FaZe,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-11-14,Passion UA,0,2,paiN,BLAST Rivals 2025 Season 2,bo3
+2025-11-13,Passion UA,0,2,Falcons,BLAST Rivals 2025 Season 2,bo3
+2025-11-12,Passion UA,2,1,The MongolZ,BLAST Rivals 2025 Season 2,bo3
+2025-09-20,Passion UA,0,2,B8,StarLadder StarSeries Fall 2025,bo3
+2025-09-20,Passion UA,0,2,Natus Vincere,StarLadder StarSeries Fall 2025,bo3
+2025-08-07,Passion UA,1,2,Spirit,BLAST Bounty 2025 Season 2,bo3
+2025-12-05,paiN,7,13,G2,StarLadder Budapest Major 2025,bo1
+2025-12-04,paiN,13,10,3DMAX,StarLadder Budapest Major 2025,bo1
+2025-11-15,paiN,0,2,FURIA,BLAST Rivals 2025 Season 2,bo3
+2025-11-14,paiN,2,0,Passion UA,BLAST Rivals 2025 Season 2,bo3
+2025-11-12,paiN,1,2,FURIA,BLAST Rivals 2025 Season 2,bo3
+2025-11-05,paiN,1,2,The MongolZ,IEM Chengdu 2025,bo3
+2025-11-03,paiN,0,2,Spirit,IEM Chengdu 2025,bo3
+2025-10-29,paiN,2,0,B8,PGL Masters Bucharest 2025,bo3
+2025-09-20,paiN,0,2,Falcons,FISSURE Playground 2,bo3
+2025-09-17,paiN,0,2,FURIA,FISSURE Playground 2,bo3
+2025-09-14,paiN,0,2,FaZe,FISSURE Playground 2,bo3
+2025-08-10,paiN,0,2,The MongolZ,BLAST Bounty 2025 Season 2,bo3
+2025-07-24,paiN,0,2,Liquid,IEM Cologne 2025 Stage 1,bo3
+2025-06-22,paiN,0,2,The MongolZ,BLAST.tv Austin Major 2025,bo3
+2025-06-20,paiN,2,1,FURIA,BLAST.tv Austin Major 2025,bo3
+2025-06-15,paiN,2,0,3DMAX,BLAST.tv Austin Major 2025,bo3
+2025-06-13,paiN,6,13,G2,BLAST.tv Austin Major 2025,bo1
+2025-06-13,paiN,3,13,Spirit,BLAST.tv Austin Major 2025,bo1
+2025-06-08,paiN,13,11,FURIA,BLAST.tv Austin Major 2025 Stage 2,bo1
+2025-04-08,paiN,1,2,Falcons,PGL Bucharest 2025,bo3
+2025-04-07,paiN,0,2,FaZe,PGL Bucharest 2025,bo3
+2025-03-10,paiN,0,2,Natus Vincere,ESL Pro League Season 21,bo3
+2025-03-08,paiN,0,2,G2,ESL Pro League Season 21,bo3
+2025-02-21,paiN,0,2,MOUZ,PGL Cluj-Napoca 2025,bo3
+2025-02-17,paiN,1,2,The MongolZ,PGL Cluj-Napoca 2025,bo3
+2025-02-16,paiN,2,1,Falcons,PGL Cluj-Napoca 2025,bo3
+2025-02-10,paiN,0,2,Imperial,ACE SA Masters 2025 Season 1 - BLAST Premier Rising Event,bo3
+2025-01-25,paiN,1,2,Natus Vincere,BLAST Bounty 2025 Season 1 Finals,bo3
+2025-01-19,paiN,2,0,FaZe,BLAST Bounty 2025 Season 1,bo3
+2025-02-01,3DMAX,0,2,Vitality,IEM Katowice 2025,bo3
+2025-02-15,3DMAX,0,2,MOUZ,PGL Cluj-Napoca 2025,bo3
+2025-03-09,3DMAX,0,2,Vitality,ESL Pro League Season 21,bo3
+2025-03-09,3DMAX,2,1,Falcons,ESL Pro League Season 21,bo3
+2025-03-10,3DMAX,0,2,The MongolZ,ESL Pro League Season 21,bo3
+2025-03-11,3DMAX,1,2,Liquid,ESL Pro League Season 21,bo3
+2025-04-06,3DMAX,2,1,The MongolZ,PGL Bucharest 2025,bo3
+2025-04-11,3DMAX,0,2,FaZe,PGL Bucharest 2025,bo3
+2025-04-23,3DMAX,0,2,FaZe,IEM Melbourne 2025,bo3
+2025-05-22,3DMAX,1,2,G2,IEM Dallas 2025,bo3
+2025-06-10,3DMAX,2,0,FaZe,BLAST.tv Austin Major 2025 Stage 2,bo3
+2025-06-13,3DMAX,2,13,Vitality,BLAST.tv Austin Major 2025,bo1
+2025-06-13,3DMAX,14,16,Natus Vincere,BLAST.tv Austin Major 2025,bo1
+2025-06-13,3DMAX,13,5,G2,BLAST.tv Austin Major 2025,bo1
+2025-06-15,3DMAX,0,2,paiN,BLAST.tv Austin Major 2025,bo3
+2025-07-17,3DMAX,2,0,paiN,FISSURE Playground 1,bo3
+2025-07-26,3DMAX,0,2,The MongolZ,IEM Cologne 2025,bo3
+2025-07-29,3DMAX,0,2,G2,IEM Cologne 2025,bo3
+2025-08-20,3DMAX,2,1,Natus Vincere,Esports World Cup 2025,bo3
+2025-08-22,3DMAX,1,2,The MongolZ,Esports World Cup 2025,bo3
+2025-09-12,3DMAX,2,1,The MongolZ,FISSURE Playground 2,bo3
+2025-09-14,3DMAX,1,2,FaZe,FISSURE Playground 2,bo3
+2025-10-05,3DMAX,0,2,FURIA,ESL Pro League Season 22,bo3
+2025-10-06,3DMAX,2,1,Natus Vincere,ESL Pro League Season 22,bo3
+2025-10-06,3DMAX,2,0,FaZe,ESL Pro League Season 22,bo3
+2025-10-08,3DMAX,2,0,G2,ESL Pro League Season 22,bo3
+2025-10-08,3DMAX,0,2,MOUZ,ESL Pro League Season 22,bo3
+2025-10-10,3DMAX,1,2,Falcons,ESL Pro League Season 22,bo3
+2025-10-18,3DMAX,2,1,Liquid,CS Asia Championships 2025,bo3
+2025-10-28,3DMAX,0,2,B8,PGL Masters Bucharest 2025,bo3
+2025-11-03,3DMAX,0,2,G2,IEM Chengdu 2025,bo3
+2025-11-30,3DMAX,13,3,Passion UA,StarLadder Budapest Major 2025 Stage 2,bo1
+2025-12-02,3DMAX,1,2,B8,StarLadder Budapest Major 2025 Stage 2,bo3
+2025-12-04,3DMAX,10,13,paiN,StarLadder Budapest Major 2025,bo1
+2025-12-05,3DMAX,4,13,Vitality,StarLadder Budapest Major 2025,bo1
