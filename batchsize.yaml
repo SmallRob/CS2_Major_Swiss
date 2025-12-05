@@ -9,7 +9,7 @@ device:
   # 是否开启 GPU 加速
   # true: 使用 CUDA
   # false: 强制使用 CPU
-  use_gpu: true
+  use_gpu: false
 
   # 显卡 ID
   # 如果你只有一张显卡，填 0

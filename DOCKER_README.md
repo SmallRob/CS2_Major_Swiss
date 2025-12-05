@@ -104,3 +104,16 @@ docker-compose.yaml配置已启用NVIDIA GPU支持：
 如果出现CUDA Out of Memory错误，请：
 1. 减小`batchsize.yaml`中的`eval_batch_size`值
 2. 重启容器
+
+## CPU环境运行
+
+如果你没有NVIDIA GPU或不想使用GPU加速，可以使用CPU版本的配置：
+
+1. 使用CPU专用的docker-compose文件：
+```bash
+docker-compose -f docker-compose.cpu.yaml up
+```
+
+2. 或者手动修改 `batchsize.yaml` 文件，将 `use_gpu` 设置为 `false`
+
+注意：在CPU模式下运行可能需要更长的时间来完成模拟计算。
