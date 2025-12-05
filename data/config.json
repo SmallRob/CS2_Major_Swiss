@@ -31,5 +31,8 @@
     "base_elo": 1000,
     "base_k_factor": 40,
     "time_decay_days": 50
+  },
+  "simulation_params": {
+    "playoff_simulations": 10000000
   }
 }
