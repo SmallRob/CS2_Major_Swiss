@@ -64,7 +64,7 @@ def load_external_config():
                 TEAM_SCORES = config.get('team_scores', {})
                 
                 # 加载积分权重参数
-                SCORING_PARAMS = config.get('scoring_params', {'elo_weight': 0.7, 'score_weight': 0.3})
+                SCORING_PARAMS = config.get('scoring_params', {'elo_weight': 0.8, 'score_weight': 0.2})
                 
                 # 加载ELO参数
                 elo_params = config.get('elo_params', {})
