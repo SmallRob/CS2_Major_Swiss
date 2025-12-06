@@ -147,8 +147,8 @@ def set_default_config():
     
     # 设置默认权重
     SCORING_PARAMS = {
-        'elo_weight': 0.7,
-        'score_weight': 0.3
+        'elo_weight': 0.8,
+        'score_weight': 0.2
     }
 
 
@@ -329,9 +329,25 @@ def predict_match(team1, team2, ratings, bo_format='bo1'):
     """
     预测比赛胜率（结合ELO评分和战队积分）
     """
+    # 获取权重参数
+    elo_weight = SCORING_PARAMS.get('elo_weight', 0.7)
+    score_weight = SCORING_PARAMS.get('score_weight', 0.3)
+    
+    # 如果ELO权重为0且积分权重为0，则返回均等概率
+    if elo_weight == 0 and score_weight == 0:
+        return 0.5, 0.5
+    
     # 1. 基于ELO评分的胜率
     r1, r2 = ratings.get(team1, 1000), ratings.get(team2, 1000)
     elo_prob1 = 1 / (1 + math.pow(10, (r2 - r1) / 400))
+    
+    # 如果积分权重为0，则只使用ELO评分
+    if score_weight == 0:
+        if bo_format == 'bo1':
+            prob1 = 0.5 + (elo_prob1 - 0.5) * 0.85
+        else:
+            prob1 = elo_prob1
+        return prob1, 1 - prob1
     
     # 2. 基于战队积分的胜率
     score1 = TEAM_SCORES.get(team1, 1500)  # 默认积分1500
@@ -339,9 +355,6 @@ def predict_match(team1, team2, ratings, bo_format='bo1'):
     score_prob1 = calculate_winrate(score1, score2) / 100  # 转换为0-1范围
     
     # 3. 根据权重参数组合两种预测
-    elo_weight = SCORING_PARAMS.get('elo_weight', 0.7)
-    score_weight = SCORING_PARAMS.get('score_weight', 0.3)
-    
     combined_prob1 = elo_weight * elo_prob1 + score_weight * score_prob1
     
     # 4. 根据比赛格式调整（原逻辑保留）
