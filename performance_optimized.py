@@ -36,7 +36,7 @@ def main():
     # 检查数据文件
     data_files = [
         'data/cs2_cleaned_matches.csv',
-        'data/hltv_ratings.txt'
+        'data/hltv_ratings.csv'
     ]
     
     missing_data = []
