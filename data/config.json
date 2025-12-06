@@ -4,13 +4,14 @@
     "base_k_factor": 40,
     "time_decay_days": 50
   },
+
   "scoring_params": {
-    "elo_weight": 0.8,
-    "score_weight": 0.2
+    "elo_weight": 1,
+    "score_weight": 0
   },
   "simulation_params": {
-    "playoff_simulations": 10000000,
-    "num_simulations": 50000
+    "playoff_simulations": 500000,
+    "num_simulations": 10000
   },
   "performance_params": {
     "eval_batch_size": 5000,

@@ -41,3 +41,4 @@ output/*.txt
 *.log
 .venv/pyvenv.cfg
 gpu_checkpoint.json
+output/intermediate_sim_data.pkl

@@ -59,7 +59,7 @@ def load_teams_from_file(filepath):
     
     try:
         df = pd.read_csv(filepath)
-        teams = df['team'].tolist()
+        teams = df['Team'].tolist()
         print(f"[数据] 从 {filepath} 加载了 {len(teams)} 支队伍")
         return teams
     except Exception as e:
@@ -76,7 +76,7 @@ def load_matchups_from_file(filepath):
     
     try:
         df = pd.read_csv(filepath)
-        matchups = [(row['team1'], row['team2']) for _, row in df.iterrows()]
+        matchups = [(row['Team1'], row['Team2']) for _, row in df.iterrows()]
         print(f"[数据] 从 {filepath} 加载了 {len(matchups)} 场对战")
         return matchups
     except Exception as e:
@@ -93,7 +93,7 @@ def load_scores_from_file(filepath):
     
     try:
         df = pd.read_csv(filepath)
-        scores = {row['team']: int(row['score']) for _, row in df.iterrows()}
+        scores = {row['Team']: int(row['Score']) for _, row in df.iterrows()}
         print(f"[数据] 从 {filepath} 加载了 {len(scores)} 支队伍的积分")
         return scores
     except Exception as e:
@@ -294,7 +294,7 @@ def load_team_ratings_from_file(filepath):
         ratings = {}
         
         for _, row in df.iterrows():
-            team_name = row['team']
+            team_name = row['Team']
             raw_rating = float(row['Rating'])
             maps_played = int(row['Maps'])
             

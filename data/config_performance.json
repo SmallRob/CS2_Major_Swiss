@@ -1,0 +1,31 @@
+{
+  "performance": {
+    "auto_adjust_batch_size": true,
+    "memory_check_interval": 1000,
+    "enable_gc_optimization": true,
+    "use_binary_format": true,
+    "max_memory_usage_percent": 85,
+    "recommended_simulations_by_memory": {
+      "4GB": 50000,
+      "8GB": 100000,
+      "16GB": 200000,
+      "32GB": 500000
+    }
+  },
+  "optimization": {
+    "use_numpy_vectorization": true,
+    "cache_elm_calculations": true,
+    "parallel_simulation": false,
+    "monitor_performance": true
+  },
+  "output": {
+    "save_binary": true,
+    "save_json_compatibility": true,
+    "compression_level": 6
+  },
+  "system": {
+    "minimum_memory_gb": 2,
+    "recommended_memory_gb": 8,
+    "minimum_cpu_cores": 2
+  }
+}
