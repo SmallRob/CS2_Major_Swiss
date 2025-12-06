@@ -10,16 +10,20 @@ import json
 import time
 import os
 import sys
+import yaml
 import itertools
 import torch
 from datetime import datetime
 from tqdm import tqdm
 
+# 获取脚本所在目录的绝对路径
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # ============================================================================
 # 配置加载
 # ============================================================================
 
-CONFIG_FILE = 'data/config.json'  # 配置文件
+CONFIG_FILE = os.path.join(SCRIPT_DIR, 'data', 'config.json')  # 配置文件
 
 def load_external_config():
     """
@@ -59,14 +63,12 @@ def load_config():
         try:
             with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
                 user_config = json.load(f)
-                if user_config and isinstance(user_config, dict):
-                    if 'device_params' in user_config and isinstance(user_config['device_params'], dict):
+                if user_config:
+                    if 'device_params' in user_config:
                         defaults['device'].update(user_config['device_params'])
-                    if 'performance_params' in user_config and isinstance(user_config['performance_params'], dict):
+                    if 'performance_params' in user_config:
                         defaults['performance'].update(user_config['performance_params'])
                 print(f"[配置] 已加载 {CONFIG_FILE}")
-        except json.JSONDecodeError as e:
-            print(f"[警告] 配置文件格式错误: {e}，将使用默认值")
         except Exception as e:
             print(f"[警告] 加载配置文件失败，使用默认设置: {e}")
     else:
@@ -204,7 +206,7 @@ class PickemOptimizer:
         print(f"\n[3/4] 开始搜索...")
         batch_size = self.config['performance']['eval_batch_size']
         save_interval = self.config['performance'].get('save_every', 1000000)
-        checkpoint_file = 'gpu_checkpoint.json'
+        checkpoint_file = os.path.join(SCRIPT_DIR, 'gpu_checkpoint.json')
         
         print(f"      - Batch Size: {batch_size:,}")
         print(f"      - 自动保存: 每 {save_interval:,} 组")
@@ -245,15 +247,9 @@ class PickemOptimizer:
         print(f"      - 生成组合空间中...")
         
         # initial=start_count 让进度条从断点处开始显示
-        # 使用 tqdm 或替代方案
-        if tqdm:
-            progress_bar = tqdm(total=total_ops, initial=start_count, unit="组", desc="      - 进度", ncols=100)
-        else:
-            progress_bar = None
-            print(f"      - 进度: {start_count}/{total_ops}")
-        
-        # 直接开始循环
-        for adv_combo in adv_combinations:
+        with tqdm(total=total_ops, initial=start_count, unit="组", desc="      - 进度", ncols=100) as pbar:
+            
+            for adv_combo in adv_combinations:
                 
                 adv_set = set(adv_combo)
                 remaining = [i for i in all_indices if i not in adv_set]
@@ -290,16 +286,10 @@ class PickemOptimizer:
                                     'advances': [self.teams[i] for i in buffer_adv[batch_best_idx]],
                                     '0-3': [self.teams[i] for i in buffer_03[batch_best_idx]]
                                 }
-                                if progress_bar:
-                                    progress_bar.write(f"   ✓ 发现新高: {best_rate:.4%} (已处理 {global_counter:,})")
-                                    # 更新进度条
-                                    progress_bar.update(current_batch_len)
-                            else:
-                                print(f"   ✓ 发现新高: {best_rate:.4%} (已处理 {global_counter:,})")
-                                # 简单进度显示
-                                if total_ops > 0:
-                                    percent = global_counter / total_ops * 100
-                                    print(f"\r      - 进度: {global_counter}/{total_ops} ({percent:.1f}%)", end='', flush=True)
+                                pbar.write(f"   ✓ 发现新高: {best_rate:.4%} (已处理 {global_counter:,})")
+                            
+                            # 更新进度条
+                            pbar.update(current_batch_len)
                             
                             # 保存Checkpoint逻辑
                             processed_counter += current_batch_len
@@ -320,7 +310,7 @@ class PickemOptimizer:
 
                             buffer_adv, buffer_30, buffer_03 = [], [], []
 
-        if buffer_adv:
+            if buffer_adv:
                 current_batch_len = len(buffer_adv)
                 t_adv = torch.tensor(buffer_adv, dtype=torch.long, device=self.device)
                 t_30 = torch.tensor(buffer_30, dtype=torch.long, device=self.device)
@@ -337,8 +327,7 @@ class PickemOptimizer:
                     }
                     pbar.write(f"   ✓ 发现新高: {best_rate:.4%} (已处理 {global_counter:,})")
                 
-                if progress_bar:
-                    progress_bar.update(current_batch_len)
+                pbar.update(current_batch_len)
 
         # 跑完删除 checkpoint
         if os.path.exists(checkpoint_file):
@@ -346,10 +335,6 @@ class PickemOptimizer:
                 os.remove(checkpoint_file)
             except:
                 pass
-        
-        # 关闭进度条
-        if progress_bar:
-            progress_bar.close()
 
         total_time = time.time() - start_time
         print(f"\n[4/4] 优化完成!")
@@ -432,7 +417,7 @@ def main():
     
     # 2. 初始化优化器
 
-    data_file = os.path.join('output', 'intermediate_sim_data.json')
+    data_file = os.path.join(SCRIPT_DIR, 'output', 'intermediate_sim_data.json')
     
     # 这里加个检查，防止用户忘了先运行 preresult
     if not os.path.exists(data_file):
@@ -471,7 +456,7 @@ def main():
         'config_used': config
     }
     
-    output_dir = 'output'
+    output_dir = os.path.join(SCRIPT_DIR, 'output')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
         
