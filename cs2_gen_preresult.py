@@ -19,9 +19,6 @@ import time
 import pandas as pd
 import numpy as np
 
-# 占位符，将在main中初始化
-pd = None
-
 # ============================================================================
 # 配置区域（从外部JSON文件加载）
 # ============================================================================
@@ -629,6 +626,4 @@ def main():
         print(f"[ERROR] 保存失败: {e}")
 
 if __name__ == "__main__":
-    import pandas
-    globals()['pd'] = pandas
     main()

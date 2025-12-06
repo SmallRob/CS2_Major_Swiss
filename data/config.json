@@ -51,8 +51,8 @@
     "3DMAX": 1589
   },
   "scoring_params": {
-    "elo_weight": 0.7,
-    "score_weight": 0.3
+    "elo_weight": 0.8,
+    "score_weight": 0.2
   },
   "simulation_params": {
     "playoff_simulations": 10000000,
