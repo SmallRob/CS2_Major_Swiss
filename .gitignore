@@ -40,3 +40,4 @@ output/*.txt
 *.bak
 *.log
 .venv/pyvenv.cfg
+gpu_checkpoint.json
