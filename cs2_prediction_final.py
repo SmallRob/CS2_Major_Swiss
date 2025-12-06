@@ -15,9 +15,71 @@ import torch
 import sys
 import time
 import os
+import pandas as pd
+from tqdm import tqdm
 
 # 获取脚本所在目录的绝对路径
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 外部数据文件路径
+TEAM_SCORES_FILE = os.path.join(SCRIPT_DIR, 'data', 'team_scores.csv')  # 战队积分数据（统一CSV格式）
+CONFIG_FILE = os.path.join(SCRIPT_DIR, 'data', 'config.json')  # 配置文件
+
+def load_teams_from_file(filepath):
+    """
+    从CSV文件加载队伍列表
+    """
+    if not os.path.exists(filepath):
+        print(f"[错误] 队伍数据文件 {filepath} 不存在")
+        return None
+    
+    try:
+        df = pd.read_csv(filepath)
+        teams = df['team'].tolist()
+        print(f"[数据] 从 {filepath} 加载了 {len(teams)} 支队伍")
+        return teams
+    except Exception as e:
+        print(f"[错误] 加载队伍数据失败: {e}")
+        return None
+
+def load_scores_from_file(filepath):
+    """
+    从CSV文件加载战队积分
+    """
+    if not os.path.exists(filepath):
+        print(f"[错误] 积分数据文件 {filepath} 不存在")
+        return None
+    
+    try:
+        df = pd.read_csv(filepath)
+        scores = {row['team']: int(row['score']) for _, row in df.iterrows()}
+        print(f"[数据] 从 {filepath} 加载了 {len(scores)} 支队伍的积分")
+        return scores
+    except Exception as e:
+        print(f"[错误] 加载积分数据失败: {e}")
+        return None
+
+def check_required_files():
+    """
+    检查所有必需的数据文件是否存在
+    """
+    required_files = [
+        TEAM_SCORES_FILE
+    ]
+    
+    missing_files = []
+    for filepath in required_files:
+        if not os.path.exists(filepath):
+            missing_files.append(filepath)
+    
+    if missing_files:
+        print("\n[错误] 以下必需文件不存在：")
+        for filepath in missing_files:
+            print(f"  - {filepath}")
+        print("\n请确保所有数据文件都存在于正确位置")
+        return False
+    
+    return True
 
 def load_prediction_results(file_path):
     """加载预测结果文件"""
@@ -189,7 +251,11 @@ class PlayoffSimulator:
         self.load_elo_ratings()
         # 预加载配置以提高性能
         self.config = load_config()
-        self.team_scores = self.config.get("team_scores", {})
+        # 从CSV文件加载战队积分
+        self.team_scores = load_scores_from_file(TEAM_SCORES_FILE)
+        if self.team_scores is None:
+            print("[错误] 无法加载战队积分数据，程序退出")
+            sys.exit(1)
         
     def load_elo_ratings(self):
         """加载真实的ELO评分数据"""
@@ -293,29 +359,7 @@ class PlayoffSimulator:
                     wins2 += 1
             return team1 if wins1 >= 3 else team2
     
-    def show_progress_bar(self, current, total, start_time, length=50):
-        """显示进度条（含时间统计）"""
-        percent = current / total
-        filled_length = int(length * percent)
-        
-        # 计算已用时间
-        elapsed_time = time.time() - start_time
-        
-        # 计算预估剩余时间
-        if current > 0:
-            avg_time_per_iteration = elapsed_time / current
-            remaining_iterations = total - current
-            eta_seconds = avg_time_per_iteration * remaining_iterations
-            eta_str = f"{eta_seconds:.0f}s"
-        else:
-            eta_str = "--s"
-        
-        # 格式化时间显示
-        elapsed_str = f"{elapsed_time:.0f}s"
-        
-        # 使用兼容性更好的字符
-        bar = '#' * filled_length + '-' * (length - filled_length)
-        return f"\r进度: [{bar}] {current}/{total} ({percent:.1%}) | 已用时: {elapsed_str} | 预计剩余: {eta_str}"
+
     
     def simulate_playoff(self, quarter_finals, num_simulations=1000):
         """多次模拟整个晋级赛，统计结果（按照固定对阵顺序）"""
@@ -343,49 +387,45 @@ class PlayoffSimulator:
         # 记录开始时间
         start_time = time.time()
         
-        for i in range(num_simulations):
-            # 更新进度条
-            if i % progress_interval == 0 or i == num_simulations - 1:
-                progress_bar = self.show_progress_bar(i + 1, num_simulations, start_time)
-                sys.stdout.write(progress_bar)
-                sys.stdout.flush()
-            
-            # 8进4阶段：前4名产生2名4强，后4名产生2名4强
-            # QF1 vs QF2 (前4名中的前2个)
-            qf1_winner = self.simulate_match_fast(
-                quarter_finals[0]['team1'], quarter_finals[0]['team2'], team_rates, "BO3"
-            )
-            qf2_winner = self.simulate_match_fast(
-                quarter_finals[1]['team1'], quarter_finals[1]['team2'], team_rates, "BO3"
-            )
-            # QF3 vs QF4 (后4名中的后2个)
-            qf3_winner = self.simulate_match_fast(
-                quarter_finals[2]['team1'], quarter_finals[2]['team2'], team_rates, "BO3"
-            )
-            qf4_winner = self.simulate_match_fast(
-                quarter_finals[3]['team1'], quarter_finals[3]['team2'], team_rates, "BO3"
-            )
-            
-            # 记录4强队伍（8进4胜者）
-            top4_teams = [qf1_winner, qf2_winner, qf3_winner, qf4_winner]
-            for winner in top4_teams:
-                semifinal_winners[winner] = semifinal_winners.get(winner, 0) + 1
-            
-            # 4进2阶段：前4名产生的2名4强决出1个2强，后4名产生的2名4强决出1个2强
-            sf1_winner = self.simulate_match_fast(qf1_winner, qf2_winner, team_rates, "BO3")
-            sf2_winner = self.simulate_match_fast(qf3_winner, qf4_winner, team_rates, "BO3")
-            
-            # 记录2强队伍（4进2胜者）
-            top2_teams = [sf1_winner, sf2_winner]
-            for winner in top2_teams:
-                final_results[winner] = final_results.get(winner, 0) + 1
-            
-            # 决赛阶段：BO5
-            champion = self.simulate_match_fast(sf1_winner, sf2_winner, team_rates, "BO5")
-            champion_counts[champion] = champion_counts.get(champion, 0) + 1
-        
-        # 完成进度条
-        print()  # 换行
+        # 使用 tqdm 进度条
+        with tqdm(total=num_simulations, desc="      - 进度", unit="次", ncols=100) as pbar:
+            for i in range(num_simulations):
+                # 8进4阶段：前4名产生2名4强，后4名产生2名4强
+                # QF1 vs QF2 (前4名中的前2个)
+                qf1_winner = self.simulate_match_fast(
+                    quarter_finals[0]['team1'], quarter_finals[0]['team2'], team_rates, "BO3"
+                )
+                qf2_winner = self.simulate_match_fast(
+                    quarter_finals[1]['team1'], quarter_finals[1]['team2'], team_rates, "BO3"
+                )
+                # QF3 vs QF4 (后4名中的后2个)
+                qf3_winner = self.simulate_match_fast(
+                    quarter_finals[2]['team1'], quarter_finals[2]['team2'], team_rates, "BO3"
+                )
+                qf4_winner = self.simulate_match_fast(
+                    quarter_finals[3]['team1'], quarter_finals[3]['team2'], team_rates, "BO3"
+                )
+                
+                # 记录4强队伍（8进4胜者）
+                top4_teams = [qf1_winner, qf2_winner, qf3_winner, qf4_winner]
+                for winner in top4_teams:
+                    semifinal_winners[winner] = semifinal_winners.get(winner, 0) + 1
+                
+                # 4进2阶段：前4名产生的2名4强决出1个2强，后4名产生的2名4强决出1个2强
+                sf1_winner = self.simulate_match_fast(qf1_winner, qf2_winner, team_rates, "BO3")
+                sf2_winner = self.simulate_match_fast(qf3_winner, qf4_winner, team_rates, "BO3")
+                
+                # 记录2强队伍（4进2胜者）
+                top2_teams = [sf1_winner, sf2_winner]
+                for winner in top2_teams:
+                    final_results[winner] = final_results.get(winner, 0) + 1
+                
+                # 决赛阶段：BO5
+                champion = self.simulate_match_fast(sf1_winner, sf2_winner, team_rates, "BO5")
+                champion_counts[champion] = champion_counts.get(champion, 0) + 1
+                
+                # 更新进度条
+                pbar.update(1)
         
         # 计算总用时
         total_time = time.time() - start_time
@@ -520,6 +560,11 @@ def main():
     # 记录程序开始时间
     program_start_time = time.time()
     
+    # 检查必需文件是否存在
+    if not check_required_files():
+        print("\n[错误] 必需文件检查失败，程序退出")
+        sys.exit(1)
+    
     # 读取预测结果
     input_file = os.path.join(SCRIPT_DIR, 'output', 'swiss_prediction.json')
     prediction_data = load_prediction_results(input_file)
@@ -537,10 +582,14 @@ def main():
     # 计算总运行时间
     total_program_time = time.time() - program_start_time
     
-    # 加载配置以获取初始积分
-    config = load_config()
-    team_scores = config.get("team_scores", {})
+    # 从CSV文件加载初始积分
+    team_scores = load_scores_from_file(TEAM_SCORES_FILE)
+    if team_scores is None:
+        print("[错误] 无法加载战队积分数据，程序退出")
+        sys.exit(1)
     
+    # 加载配置文件以获取模拟次数
+    config = load_config()
     # 获取模拟次数用于显示
     num_simulations = config["simulation_params"]["playoff_simulations"]
     

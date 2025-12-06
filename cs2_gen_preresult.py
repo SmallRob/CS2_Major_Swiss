@@ -38,7 +38,9 @@ SCORING_PARAMS = {}
 
 # 外部数据文件路径
 MATCHES_FILE = 'data/cs2_cleaned_matches.csv'  # 历史比赛数据
-TEAM_RATINGS_FILE = 'data/hltv_ratings.csv'  # 战队评分数据（统一CSV格式）
+TEAM_RATINGS_FILE = 'data/hltv_ratings.csv'  # 战队评分数据
+TEAM_SCORES_FILE = 'data/team_scores.csv'  # 战队积分数据（统一CSV格式）
+ROUND1_MATCHUPS_FILE = 'data/round1_matchups.csv'  # 第一轮对战配置（统一CSV格式）
 CONFIG_FILE = 'data/config.json'  # 配置文件
 
 # ELO系统参数
@@ -47,109 +49,207 @@ BASE_K_FACTOR = 40
 TIME_DECAY_DAYS = 50
 
 
+def load_teams_from_file(filepath):
+    """
+    从CSV文件加载队伍列表
+    """
+    if not os.path.exists(filepath):
+        print(f"[错误] 队伍数据文件 {filepath} 不存在")
+        return None
+    
+    try:
+        df = pd.read_csv(filepath)
+        teams = df['team'].tolist()
+        print(f"[数据] 从 {filepath} 加载了 {len(teams)} 支队伍")
+        return teams
+    except Exception as e:
+        print(f"[错误] 加载队伍数据失败: {e}")
+        return None
+
+def load_matchups_from_file(filepath):
+    """
+    从CSV文件加载第一轮对战配置
+    """
+    if not os.path.exists(filepath):
+        print(f"[错误] 对战配置文件 {filepath} 不存在")
+        return None
+    
+    try:
+        df = pd.read_csv(filepath)
+        matchups = [(row['team1'], row['team2']) for _, row in df.iterrows()]
+        print(f"[数据] 从 {filepath} 加载了 {len(matchups)} 场对战")
+        return matchups
+    except Exception as e:
+        print(f"[错误] 加载对战配置失败: {e}")
+        return None
+
+def load_scores_from_file(filepath):
+    """
+    从CSV文件加载战队积分
+    """
+    if not os.path.exists(filepath):
+        print(f"[错误] 积分数据文件 {filepath} 不存在")
+        return None
+    
+    try:
+        df = pd.read_csv(filepath)
+        scores = {row['team']: int(row['score']) for _, row in df.iterrows()}
+        print(f"[数据] 从 {filepath} 加载了 {len(scores)} 支队伍的积分")
+        return scores
+    except Exception as e:
+        print(f"[错误] 加载积分数据失败: {e}")
+        return None
+
 def load_external_config():
     """
-    从外部JSON配置文件加载队伍和对局配置
+    从外部CSV文件加载队伍、对战配置和积分数据
     """
-    global TEAMS, ROUND1_MATCHUPS, BASE_ELO, BASE_K_FACTOR, TIME_DECAY_DAYS
+    global TEAMS, ROUND1_MATCHUPS, TEAM_SCORES, SCORING_PARAMS, BASE_ELO, BASE_K_FACTOR, TIME_DECAY_DAYS
     
+    # 1. 从CSV文件加载队伍列表
+    teams = load_teams_from_file(TEAM_SCORES_FILE)
+    if teams is None:
+        return False
+    
+    # 2. 从CSV文件加载对战配置
+    matchups = load_matchups_from_file(ROUND1_MATCHUPS_FILE)
+    if matchups is None:
+        return False
+    
+    # 3. 从CSV文件加载积分数据
+    scores = load_scores_from_file(TEAM_SCORES_FILE)
+    if scores is None:
+        return False
+    
+    # 4. 加载配置文件中的其他参数
     if os.path.exists(CONFIG_FILE):
         try:
             with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
                 config = json.load(f)
-                TEAMS.extend(config.get('teams', []))
-                ROUND1_MATCHUPS.extend([tuple(matchup) for matchup in config.get('round1_matchups', [])])
-                
-                # 加载战队积分
-                TEAM_SCORES = config.get('team_scores', {})
-                
-                # 加载积分权重参数
-                SCORING_PARAMS = config.get('scoring_params', {'elo_weight': 0.8, 'score_weight': 0.2})
-                
-                # 加载ELO参数
-                elo_params = config.get('elo_params', {})
-                BASE_ELO = elo_params.get('base_elo', BASE_ELO)
-                BASE_K_FACTOR = elo_params.get('base_k_factor', BASE_K_FACTOR)
-                TIME_DECAY_DAYS = elo_params.get('time_decay_days', TIME_DECAY_DAYS)
-                
+            
+            # 加载积分权重参数
+            SCORING_PARAMS.update(config.get('scoring_params', {'elo_weight': 0.8, 'score_weight': 0.2}))
+            
+            # 加载ELO参数
+            elo_params = config.get('elo_params', {})
+            global BASE_ELO, BASE_K_FACTOR, TIME_DECAY_DAYS
+            BASE_ELO = elo_params.get('base_elo', BASE_ELO)
+            BASE_K_FACTOR = elo_params.get('base_k_factor', BASE_K_FACTOR)
+            TIME_DECAY_DAYS = elo_params.get('time_decay_days', TIME_DECAY_DAYS)
+            
             print(f"[配置] 已加载 {CONFIG_FILE}")
-            return True
         except Exception as e:
-            print(f"[警告] 加载配置文件失败: {e}")
-            # 如果加载失败，使用默认配置
-            set_default_config()
-            return False
-    else:
-        print(f"[提示] 未找到 {CONFIG_FILE}，使用默认设置")
-        set_default_config()
+            print(f"[警告] 加载配置文件失败: {e}，使用默认参数")
+    
+    # 5. 验证数据完整性
+    if not validate_config_data(teams, matchups, scores):
+        print("\n[错误] 数据验证失败，程序退出")
         return False
+    
+    # 6. 设置全局变量
+    TEAMS.extend(teams)
+    ROUND1_MATCHUPS.extend(matchups)
+    TEAM_SCORES.update(scores)
+    
+    print("[配置] 数据加载完成")
+    return True
 
 
-def set_default_config():
+def validate_config_data(teams, matchups, scores):
     """
-    设置默认的队伍和对局配置
+    验证从CSV文件加载的数据是否完整
     """
-    global TEAMS, ROUND1_MATCHUPS, TEAM_SCORES, SCORING_PARAMS
+    if not teams:
+        print("[错误] 队伍列表为空")
+        print("      请确保 team_scores.csv 文件包含有效的队伍数据")
+        return False
+        
+    if not matchups:
+        print("[错误] 第一轮对战配置为空")
+        print("      请确保 round1_matchups.csv 文件包含有效的对战配置")
+        return False
+        
+    if not scores:
+        print("[错误] 队伍积分数据为空")
+        print("      请确保 team_scores.csv 文件包含有效的积分数据")
+        return False
+        
+    if len(teams) != 16:
+        print(f"[错误] 队伍数量不正确，应为16支，实际为 {len(teams)} 支")
+        return False
+        
+    if len(matchups) != 8:
+        print(f"[错误] 第一轮对战数量不正确，应为8场，实际为 {len(matchups)} 场")
+        return False
+        
+    # 验证第一轮对战中的队伍是否都在队伍列表中
+    for matchup in matchups:
+        if len(matchup) != 2:
+            print(f"[错误] 对战配置格式错误: {matchup}")
+            return False
+        team1, team2 = matchup
+        if team1 not in teams:
+            print(f"[错误] 对战配置中的队伍 '{team1}' 不在队伍列表中")
+            return False
+        if team2 not in teams:
+            print(f"[错误] 对战配置中的队伍 '{team2}' 不在队伍列表中")
+            return False
     
-    # 清空现有配置
-    TEAMS.clear()
-    TEAMS.extend([
-        "FURIA",          # 种子1
-        "Natus Vincere",  # 种子2
-        "Vitality",       # 种子3
-        "FaZe",           # 种子4
-        "Falcons",        # 种子5
-        "B8",             # 种子6
-        "The MongolZ",    # 种子7
-        "Imperial",       # 种子8
-        "MOUZ",           # 种子9
-        "PARIVISION",     # 种子10
-        "Spirit",         # 种子11
-        "Liquid",         # 种子12
-        "G2",             # 种子13
-        "Passion UA",     # 种子14
-        "paiN",           # 种子15
-        "3DMAX"           # 种子16
-    ])
+    # 验证队伍积分配置是否完整
+    for team in teams:
+        if team not in scores:
+            print(f"[错误] 队伍 '{team}' 在队伍积分配置中缺失")
+            return False
     
-    # 清空现有对局配置
-    ROUND1_MATCHUPS.clear()
-    ROUND1_MATCHUPS.extend([
-        ("FURIA", "Natus Vincere"),           # Match 1
-        ("Vitality", "FaZe"),                 # Match 2
-        ("Falcons", "B8"),                    # Match 3
-        ("The MongolZ", "Imperial"),          # Match 4
-        ("MOUZ", "PARIVISION"),               # Match 5
-        ("Spirit", "Liquid"),                 # Match 6
-        ("G2", "Passion UA"),                 # Match 7
-        ("paiN", "3DMAX")                     # Match 8
-    ])
+    return True
+
+def validate_config(config):
+    """
+    验证配置文件是否完整，缺少必要配置则直接退出
+    """
+    if not config.get('teams'):
+        print("[错误] 配置文件中缺少队伍列表 (teams)")
+        print("      请确保 config.json 包含有效的队伍配置")
+        return False
+        
+    if not config.get('round1_matchups'):
+        print("[错误] 配置文件中缺少第一轮对战配置 (round1_matchups)")
+        print("      请确保 config.json 包含有效的第一轮对战配置")
+        return False
+        
+    if not config.get('team_scores'):
+        print("[错误] 配置文件中缺少队伍积分 (team_scores)")
+        print("      请确保 config.json 包含有效的队伍积分配置")
+        return False
+        
+    if len(config['teams']) != 16:
+        print(f"[错误] 队伍数量不正确，应为16支，实际为 {len(config['teams'])} 支")
+        return False
+        
+    if len(config['round1_matchups']) != 8:
+        print(f"[错误] 第一轮对战数量不正确，应为8场，实际为 {len(config['round1_matchups'])} 场")
+        return False
+        
+    # 验证第一轮对战中的队伍是否都在队伍列表中
+    for matchup in config['round1_matchups']:
+        if len(matchup) != 2:
+            print(f"[错误] 对战配置格式错误: {matchup}")
+            return False
+        team1, team2 = matchup
+        if team1 not in config['teams']:
+            print(f"[错误] 对战配置中的队伍 '{team1}' 不在队伍列表中")
+            return False
+        if team2 not in config['teams']:
+            print(f"[错误] 对战配置中的队伍 '{team2}' 不在队伍列表中")
+            return False
     
-    # 设置默认积分
-    TEAM_SCORES = {
-        "FURIA": 2001,
-        "Natus Vincere": 1690,
-        "Vitality": 1883,
-        "FaZe": 1545,
-        "Falcons": 1914,
-        "B8": 1573,
-        "The MongolZ": 1758,
-        "Imperial": 1321,
-        "MOUZ": 1799,
-        "PARIVISION": 1487,
-        "Spirit": 1717,
-        "Liquid": 1694,
-        "G2": 1691,
-        "Passion UA": 1380,
-        "paiN": 1576,
-        "3DMAX": 1589
-    }
+    # 验证队伍积分配置是否完整
+    for team in config['teams']:
+        if team not in config['team_scores']:
+            print(f"[错误] 队伍 '{team}' 在队伍积分配置中缺失")
+            return False
     
-    # 设置默认权重
-    SCORING_PARAMS = {
-        'elo_weight': 0.8,
-        'score_weight': 0.2
-    }
+    return True
 
 
 def load_config():
@@ -350,8 +450,13 @@ def predict_match(team1, team2, ratings, bo_format='bo1'):
         return prob1, 1 - prob1
     
     # 2. 基于战队积分的胜率
-    score1 = TEAM_SCORES.get(team1, 1500)  # 默认积分1500
-    score2 = TEAM_SCORES.get(team2, 1500)  # 默认积分1500
+    # 严格检查：如果队伍积分不存在，则返回均等概率
+    if team1 not in TEAM_SCORES or team2 not in TEAM_SCORES:
+        print(f"[警告] 队伍积分数据缺失，使用均等胜率: {team1} vs {team2}")
+        return 0.5, 0.5
+    
+    score1 = TEAM_SCORES[team1]
+    score2 = TEAM_SCORES[team2]
     score_prob1 = calculate_winrate(score1, score2) / 100  # 转换为0-1范围
     
     # 3. 根据权重参数组合两种预测
@@ -420,10 +525,11 @@ def simulate_full_swiss(ratings, num_simulations=100000):
                     while len(remaining) >= 2:
                         team1 = remaining.pop(0)
                         matched = False
+                        team2 = None
                         for i in range(len(remaining) - 1, -1, -1):
-                            team2 = remaining[i]
-                            if team2 not in match_history[team1]:
-                                remaining.pop(i)
+                            team2_candidate = remaining[i]
+                            if team2_candidate not in match_history[team1]:
+                                team2 = remaining.pop(i)
                                 matched = True
                                 break
                         if not matched:
@@ -537,23 +643,46 @@ def simulate_full_swiss(ratings, num_simulations=100000):
 # 主流程
 # ============================================================================
 
+def check_required_files():
+    """
+    检查所有必需的数据文件是否存在
+    """
+    required_files = [
+        TEAM_SCORES_FILE,
+        ROUND1_MATCHUPS_FILE,
+        MATCHES_FILE,
+        TEAM_RATINGS_FILE
+    ]
+    
+    missing_files = []
+    for filepath in required_files:
+        if not os.path.exists(filepath):
+            missing_files.append(filepath)
+    
+    if missing_files:
+        print("\n[错误] 以下必需文件不存在：")
+        for filepath in missing_files:
+            print(f"  - {filepath}")
+        print("\n请确保所有数据文件都存在于正确位置")
+        return False
+    
+    return True
+
 def main():
     print("=" * 60)
     print("CS2 Major 瑞士轮预测系统数据生成")
     print("=" * 60)
     print(f"[LOG] {datetime.now().strftime('%H:%M:%S')} - 程序启动", flush=True)
     
-    # 加载外部配置
-    load_external_config()
+    # 检查必需文件是否存在
+    if not check_required_files():
+        print("\n[错误] 必需文件检查失败，程序退出")
+        sys.exit(1)
     
-    # 验证配置
-    if not TEAMS:
-        print("[错误] 未加载到有效的队伍配置")
-        return
-        
-    if not ROUND1_MATCHUPS:
-        print("[错误] 未加载到有效的第一轮对局配置")
-        return
+    # 加载外部配置
+    if not load_external_config():
+        print("\n[错误] 配置加载失败，程序退出")
+        sys.exit(1)
     
     print(f"[配置] 已加载 {len(TEAMS)} 支队伍")
     print(f"[配置] 已加载 {len(ROUND1_MATCHUPS)} 场第一轮对局")
