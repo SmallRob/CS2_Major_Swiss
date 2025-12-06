@@ -206,10 +206,17 @@ class PickemOptimizer:
         print(f"\n[3/4] 开始搜索...")
         batch_size = self.config['performance']['eval_batch_size']
         save_interval = self.config['performance'].get('save_every', 1000000)
-        checkpoint_file = os.path.join(SCRIPT_DIR, 'gpu_checkpoint.json')
+        
+        # 创建output文件夹路径
+        output_dir = os.path.join(SCRIPT_DIR, 'output')
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        
+        checkpoint_file = os.path.join(output_dir, 'gpu_checkpoint.json')
         
         print(f"      - Batch Size: {batch_size:,}")
         print(f"      - 自动保存: 每 {save_interval:,} 组")
+        print(f"      - 进度文件: {checkpoint_file}")
         
         all_indices = list(range(len(self.teams)))
         
@@ -227,7 +234,9 @@ class PickemOptimizer:
                     best_prediction = ckpt.get('best_prediction', None)
                     print(f"      [恢复进度] 从第 {start_count:,} 组继续，当前最佳: {best_rate:.4%}")
             except Exception as e:
-                print(f"      [警告] 无法读取存档: {e}")
+                print(f"      [警告] 无法读取进度文件: {e}")
+        else:
+            print(f"      [提示] 未找到进度文件，从头开始搜索")
 
         # 缓冲区
         buffer_adv = []
