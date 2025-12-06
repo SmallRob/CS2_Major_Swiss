@@ -38,7 +38,7 @@ SCORING_PARAMS = {}
 
 # 外部数据文件路径
 MATCHES_FILE = 'data/cs2_cleaned_matches.csv'  # 历史比赛数据
-TEAM_RATINGS_FILE = 'data/hltv_ratings.txt'  # 战队评分数据
+TEAM_RATINGS_FILE = 'data/hltv_ratings.csv'  # 战队评分数据（统一CSV格式）
 CONFIG_FILE = 'data/config.json'  # 配置文件
 
 # ELO系统参数
@@ -183,7 +183,7 @@ def load_config():
 
 def load_team_ratings_from_file(filepath):
     """
-    从战队属性.txt加载战队评分（考虑样本量置信度）
+    从CSV文件加载战队评分（考虑样本量置信度）
     """
     try:
         df = pd.read_csv(filepath)
