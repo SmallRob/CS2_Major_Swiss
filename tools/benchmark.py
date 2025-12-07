@@ -9,10 +9,14 @@ import os
 import sys
 import json
 import numpy as np
+
+# 添加上级目录到sys.path，以便能够导入上级目录的模块
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
 from performance_utils import PerformanceMonitor, check_system_resources
 from cs2_gen_preresult import (
-    load_external_config, TEAMS, simulate_single_swiss_optimized,
-    calculate_winrate_optimized
+    load_external_config, TEAMS, simulate_full_swiss,
+    calculate_winrate
 )
 
 def benchmark_winrate_calculations():
@@ -28,7 +32,7 @@ def benchmark_winrate_calculations():
     monitor.start_monitoring()
     
     for score_a, score_b in test_cases:
-        calculate_winrate_optimized(score_a, score_b)
+        calculate_winrate(score_a, score_b)
     
     optimized_time = time.time() - monitor.start_time
     print(f"优化版胜率计算: {optimized_time:.4f}秒")
@@ -51,7 +55,7 @@ def benchmark_simulation():
     monitor.start_monitoring()
     
     for _ in range(num_simulations):
-        simulate_single_swiss_optimized(test_ratings)
+        simulate_full_swiss(test_ratings, 1)  # 每次只模拟一次
     
     elapsed_time = time.time() - monitor.start_time
     sims_per_second = num_simulations / elapsed_time
