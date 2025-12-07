@@ -7,4 +7,5 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  darkMode: 'class', // 启用暗黑模式支持
 }
