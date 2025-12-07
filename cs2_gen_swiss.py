@@ -10,20 +10,16 @@ import json
 import time
 import os
 import sys
-import yaml
 import itertools
 import torch
 from datetime import datetime
 from tqdm import tqdm
 
-# 获取脚本所在目录的绝对路径
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-
 # ============================================================================
 # 配置加载
 # ============================================================================
 
-CONFIG_FILE = os.path.join(SCRIPT_DIR, 'data', 'config.json')  # 配置文件
+CONFIG_FILE = 'data/config.json'  # 配置文件
 
 def load_external_config():
     """
@@ -63,12 +59,14 @@ def load_config():
         try:
             with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
                 user_config = json.load(f)
-                if user_config:
-                    if 'device_params' in user_config:
+                if user_config and isinstance(user_config, dict):
+                    if 'device_params' in user_config and isinstance(user_config['device_params'], dict):
                         defaults['device'].update(user_config['device_params'])
-                    if 'performance_params' in user_config:
+                    if 'performance_params' in user_config and isinstance(user_config['performance_params'], dict):
                         defaults['performance'].update(user_config['performance_params'])
                 print(f"[配置] 已加载 {CONFIG_FILE}")
+        except json.JSONDecodeError as e:
+            print(f"[警告] 配置文件格式错误: {e}，将使用默认值")
         except Exception as e:
             print(f"[警告] 加载配置文件失败，使用默认设置: {e}")
     else:
@@ -206,9 +204,9 @@ class PickemOptimizer:
         print(f"\n[3/4] 开始搜索...")
         batch_size = self.config['performance']['eval_batch_size']
         save_interval = self.config['performance'].get('save_every', 1000000)
-        
+
         # 创建output文件夹路径
-        output_dir = os.path.join(SCRIPT_DIR, 'output')
+        output_dir = 'output'
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         
@@ -234,7 +232,7 @@ class PickemOptimizer:
                     best_prediction = ckpt.get('best_prediction', None)
                     print(f"      [恢复进度] 从第 {start_count:,} 组继续，当前最佳: {best_rate:.4%}")
             except Exception as e:
-                print(f"      [警告] 无法读取进度文件: {e}")
+                print(f"      [警告] 无法读取存档: {e}")
         else:
             print(f"      [提示] 未找到进度文件，从头开始搜索")
 
@@ -319,7 +317,7 @@ class PickemOptimizer:
 
                             buffer_adv, buffer_30, buffer_03 = [], [], []
 
-            if buffer_adv:
+        if buffer_adv:
                 current_batch_len = len(buffer_adv)
                 t_adv = torch.tensor(buffer_adv, dtype=torch.long, device=self.device)
                 t_30 = torch.tensor(buffer_30, dtype=torch.long, device=self.device)
@@ -426,7 +424,7 @@ def main():
     
     # 2. 初始化优化器
 
-    data_file = os.path.join(SCRIPT_DIR, 'output', 'intermediate_sim_data.json')
+    data_file = os.path.join('output', 'cs2_gen_preresult.json')
     
     # 这里加个检查，防止用户忘了先运行 preresult
     if not os.path.exists(data_file):
@@ -465,11 +463,11 @@ def main():
         'config_used': config
     }
     
-    output_dir = os.path.join(SCRIPT_DIR, 'output')
+    output_dir = 'output'
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
         
-    output_path = os.path.join(output_dir, 'swiss_prediction.json')
+    output_path = os.path.join(output_dir, 'cs2_gen_swiss.json')
     
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2, ensure_ascii=False)

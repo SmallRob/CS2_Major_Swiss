@@ -465,7 +465,7 @@ def generate_playoff_prediction(prediction_data, quarter_finals):
     num_simulations = config["simulation_params"]["playoff_simulations"]
     
     # 创建模拟器
-    simulator = PlayoffSimulator(os.path.join(SCRIPT_DIR, 'output', 'intermediate_sim_data.json'))
+    simulator = PlayoffSimulator(os.path.join(SCRIPT_DIR, 'output', 'cs2_gen_preresult.json'))
     
     # 模拟晋级赛
     print("模拟晋级赛结果...")
@@ -566,7 +566,7 @@ def main():
         sys.exit(1)
     
     # 读取预测结果
-    input_file = os.path.join(SCRIPT_DIR, 'output', 'swiss_prediction.json')
+    input_file = os.path.join(SCRIPT_DIR, 'output', 'cs2_gen_swiss.json')
     prediction_data = load_prediction_results(input_file)
     
     # 生成晋级赛对阵
@@ -576,7 +576,7 @@ def main():
     playoff_prediction = generate_playoff_prediction(prediction_data, quarter_finals)
     
     # 保存结果
-    output_file = os.path.join(SCRIPT_DIR, 'output', 'playoff_prediction_final.json')
+    output_file = os.path.join(SCRIPT_DIR, 'output', 'cs2_prediction_final.json')
     save_playoff_prediction(playoff_prediction, output_file)
     
     # 计算总运行时间

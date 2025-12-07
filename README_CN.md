@@ -102,7 +102,7 @@ python cs2_gen_preresult.py
 
 会生成：
 - `output/intermediate_sim_data.pkl` - 高效二进制格式 (推荐)
-- `output/intermediate_sim_data.json` - 兼容JSON格式
+- `output/cs2_gen_preresult.json` - 兼容JSON格式
 - 包含 10 万次瑞士轮模拟结果
 
 **新增功能**：
@@ -162,7 +162,7 @@ python cs2_gen_final.py
 
 - `output/final_prediction.json` - 完整结果，包含最佳 Pick'Em 组合
 - `output/optimized_report.txt` - 人类可读的推荐方案
-- `output/intermediate_sim_data.json` - 缓存的模拟数据（来自第一步）
+- `output/cs2_gen_preresult.json` - 缓存的模拟数据（来自第一步）
 - `gpu_checkpoint.json` - 自动保存的进度（可断点续传）
 
 **注意事项：**

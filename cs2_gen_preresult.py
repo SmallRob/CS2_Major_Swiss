@@ -18,6 +18,7 @@ import multiprocessing
 import time
 import pandas as pd
 import numpy as np
+from tqdm import tqdm
 
 # ============================================================================
 # 配置区域（从外部JSON文件加载）
@@ -106,15 +107,24 @@ def load_external_config():
     """
     global TEAMS, ROUND1_MATCHUPS, TEAM_SCORES, SCORING_PARAMS, BASE_ELO, BASE_K_FACTOR, TIME_DECAY_DAYS
     
-    # 1. 从CSV文件加载队伍列表
-    teams = load_teams_from_file(TEAM_SCORES_FILE)
-    if teams is None:
-        return False
-    
-    # 2. 从CSV文件加载对战配置
+    # 1. 从CSV文件加载对战配置
     matchups = load_matchups_from_file(ROUND1_MATCHUPS_FILE)
     if matchups is None:
         return False
+    
+    # 2. 从round1_matchups.csv中获取16个种子顺序
+    teams = []
+    for team1, team2 in matchups:
+        if team1 not in teams:
+            teams.append(team1)
+        if team2 not in teams:
+            teams.append(team2)
+    
+    if len(teams) != 16:
+        print(f"[错误] 从round1_matchups.csv中提取的队伍数量不正确，应为16支，实际为 {len(teams)} 支")
+        return False
+    
+    print(f"[数据] 从 {ROUND1_MATCHUPS_FILE} 提取了 {len(teams)} 支队伍的种子顺序")
     
     # 3. 从CSV文件加载积分数据
     scores = load_scores_from_file(TEAM_SCORES_FILE)
@@ -161,7 +171,7 @@ def validate_config_data(teams, matchups, scores):
     """
     if not teams:
         print("[错误] 队伍列表为空")
-        print("      请确保 team_scores.csv 文件包含有效的队伍数据")
+        print("      请确保 round1_matchups.csv 文件包含有效的对战配置")
         return False
         
     if not matchups:
@@ -478,153 +488,158 @@ def simulate_full_swiss(ratings, num_simulations=100000):
     team_results = defaultdict(lambda: {'3-0': 0, 'qualified': 0, '0-3': 0, 'total': 0})
     all_simulations = []
     
-    print(f"[模拟] 开始运行 {num_simulations} 次瑞士轮模拟...")
+    print(f"[模拟] 开始运行 {num_simulations:,} 次瑞士轮模拟...")
     
-    for sim in range(num_simulations):
-        records = {team: (0, 0) for team in TEAMS}
-        match_history = {team: [] for team in TEAMS}
-        
-        # 第一轮（BO1）
-        for team1, team2 in ROUND1_MATCHUPS:
-            prob1, _ = predict_match(team1, team2, ratings, 'bo1')
-            winner = team1 if random.random() < prob1 else team2
-            loser = team2 if winner == team1 else team1
+    # 记录开始时间
+    start_time = time.time()
+    
+    # 使用 tqdm 进度条
+    with tqdm(total=num_simulations, desc="      - 进度", unit="次", ncols=100) as pbar:
+        for sim in range(num_simulations):
+            records = {team: (0, 0) for team in TEAMS}
+            match_history = {team: [] for team in TEAMS}
             
-            w, l = records[winner]
-            records[winner] = (w + 1, l)
-            w, l = records[loser]
-            records[loser] = (w, l + 1)
+            # 第一轮（BO1）
+            for team1, team2 in ROUND1_MATCHUPS:
+                prob1, _ = predict_match(team1, team2, ratings, 'bo1')
+                winner = team1 if random.random() < prob1 else team2
+                loser = team2 if winner == team1 else team1
+                
+                w, l = records[winner]
+                records[winner] = (w + 1, l)
+                w, l = records[loser]
+                records[loser] = (w, l + 1)
+                
+                match_history[team1].append(team2)
+                match_history[team2].append(team1)
             
-            match_history[team1].append(team2)
-            match_history[team2].append(team1)
-        
-        # 后续轮次
-        for round_num in range(2, 6):
-            groups = defaultdict(list)
+            # 后续轮次
+            for round_num in range(2, 6):
+                groups = defaultdict(list)
+                for team, (wins, losses) in records.items():
+                    if wins < 3 and losses < 3:
+                        groups[(wins, losses)].append(team)
+                
+                if not groups:
+                    break
+                
+                for record, teams in groups.items():
+                    difficulty = {}
+                    for team in teams:
+                        diff = 0
+                        for opponent in match_history[team]:
+                            opp_wins, opp_losses = records[opponent]
+                            diff += (opp_wins - opp_losses)
+                        difficulty[team] = diff
+                    
+                    teams.sort(key=lambda t: (-difficulty[t], TEAMS.index(t)))
+                    
+                    # Round 2-3 配对逻辑
+                    if round_num in [2, 3]:
+                        remaining = teams.copy()
+                        while len(remaining) >= 2:
+                            team1 = remaining.pop(0)
+                            matched = False
+                            team2 = None
+                            for i in range(len(remaining) - 1, -1, -1):
+                                team2_candidate = remaining[i]
+                                if team2_candidate not in match_history[team1]:
+                                    team2 = remaining.pop(i)
+                                    matched = True
+                                    break
+                            if not matched:
+                                team2 = remaining.pop()
+                            
+                            wins1, losses1 = records[team1]
+                            wins2, losses2 = records[team2]
+                            is_elimination_or_advancement = (wins1 == 2 or losses1 == 2 or wins2 == 2 or losses2 == 2)
+                            bo_format = 'bo3' if is_elimination_or_advancement else 'bo1'
+                            
+                            prob1, _ = predict_match(team1, team2, ratings, bo_format)
+                            winner = team1 if random.random() < prob1 else team2
+                            loser = team2 if winner == team1 else team1
+                            
+                            w, l = records[winner]
+                            records[winner] = (w + 1, l)
+                            w, l = records[loser]
+                            records[loser] = (w, l + 1)
+                            
+                            match_history[team1].append(team2)
+                            match_history[team2].append(team1)
+                    
+                    # Round 4-5 配对逻辑（使用优先级表）
+                    else:
+                        PAIRING_PRIORITY = [
+                            [(0, 5), (1, 4), (2, 3)], [(0, 5), (1, 3), (2, 4)],
+                            [(0, 4), (1, 5), (2, 3)], [(0, 4), (1, 3), (2, 5)],
+                            [(0, 3), (1, 5), (2, 4)], [(0, 3), (1, 4), (2, 5)],
+                            [(0, 5), (1, 2), (3, 4)], [(0, 4), (1, 2), (3, 5)],
+                            [(0, 2), (1, 5), (3, 4)], [(0, 2), (1, 4), (3, 5)],
+                            [(0, 3), (1, 2), (4, 5)], [(0, 2), (1, 3), (4, 5)],
+                            [(0, 1), (2, 5), (3, 4)], [(0, 1), (2, 4), (3, 5)],
+                            [(0, 1), (2, 3), (4, 5)],
+                        ]
+                        
+                        matched_pairs = None
+                        for priority_pattern in PAIRING_PRIORITY:
+                            valid = True
+                            test_pairs = []
+                            for idx1, idx2 in priority_pattern:
+                                if idx1 >= len(teams) or idx2 >= len(teams):
+                                    valid = False
+                                    break
+                                team1, team2 = teams[idx1], teams[idx2]
+                                if team2 in match_history[team1]:
+                                    valid = False
+                                    break
+                                test_pairs.append((team1, team2))
+                            if valid:
+                                matched_pairs = test_pairs
+                                break
+                        
+                        if matched_pairs is None:
+                            matched_pairs = []
+                            for idx1, idx2 in PAIRING_PRIORITY[0]:
+                                if idx1 < len(teams) and idx2 < len(teams):
+                                    matched_pairs.append((teams[idx1], teams[idx2]))
+                        
+                        for team1, team2 in matched_pairs:
+                            wins1, losses1 = records[team1]
+                            wins2, losses2 = records[team2]
+                            is_elimination_or_advancement = (wins1 == 2 or losses1 == 2 or wins2 == 2 or losses2 == 2)
+                            bo_format = 'bo3' if is_elimination_or_advancement else 'bo1'
+                            
+                            prob1, _ = predict_match(team1, team2, ratings, bo_format)
+                            winner = team1 if random.random() < prob1 else team2
+                            loser = team2 if winner == team1 else team1
+                            
+                            w, l = records[winner]
+                            records[winner] = (w + 1, l)
+                            w, l = records[loser]
+                            records[loser] = (w, l + 1)
+                            
+                            match_history[team1].append(team2)
+                            match_history[team2].append(team1)
+            
+            sim_result = {'3-0': set(), 'qualified': set(), '0-3': set()}
             for team, (wins, losses) in records.items():
-                if wins < 3 and losses < 3:
-                    groups[(wins, losses)].append(team)
+                team_results[team]['total'] += 1
+                if wins == 3 and losses == 0:
+                    team_results[team]['3-0'] += 1
+                    team_results[team]['qualified'] += 1
+                    sim_result['3-0'].add(team)
+                    sim_result['qualified'].add(team)
+                elif wins == 3:
+                    team_results[team]['qualified'] += 1
+                    sim_result['qualified'].add(team)
+                elif losses == 3 and wins == 0:
+                    team_results[team]['0-3'] += 1
+                    sim_result['0-3'].add(team)
             
-            if not groups:
-                break
+            all_simulations.append(sim_result)
             
-            for record, teams in groups.items():
-                difficulty = {}
-                for team in teams:
-                    diff = 0
-                    for opponent in match_history[team]:
-                        opp_wins, opp_losses = records[opponent]
-                        diff += (opp_wins - opp_losses)
-                    difficulty[team] = diff
-                
-                teams.sort(key=lambda t: (-difficulty[t], TEAMS.index(t)))
-                
-                # Round 2-3 配对逻辑
-                if round_num in [2, 3]:
-                    remaining = teams.copy()
-                    while len(remaining) >= 2:
-                        team1 = remaining.pop(0)
-                        matched = False
-                        team2 = None
-                        for i in range(len(remaining) - 1, -1, -1):
-                            team2_candidate = remaining[i]
-                            if team2_candidate not in match_history[team1]:
-                                team2 = remaining.pop(i)
-                                matched = True
-                                break
-                        if not matched:
-                            team2 = remaining.pop()
-                        
-                        wins1, losses1 = records[team1]
-                        wins2, losses2 = records[team2]
-                        is_elimination_or_advancement = (wins1 == 2 or losses1 == 2 or wins2 == 2 or losses2 == 2)
-                        bo_format = 'bo3' if is_elimination_or_advancement else 'bo1'
-                        
-                        prob1, _ = predict_match(team1, team2, ratings, bo_format)
-                        winner = team1 if random.random() < prob1 else team2
-                        loser = team2 if winner == team1 else team1
-                        
-                        w, l = records[winner]
-                        records[winner] = (w + 1, l)
-                        w, l = records[loser]
-                        records[loser] = (w, l + 1)
-                        
-                        match_history[team1].append(team2)
-                        match_history[team2].append(team1)
-                
-                # Round 4-5 配对逻辑（使用优先级表）
-                else:
-                    PAIRING_PRIORITY = [
-                        [(0, 5), (1, 4), (2, 3)], [(0, 5), (1, 3), (2, 4)],
-                        [(0, 4), (1, 5), (2, 3)], [(0, 4), (1, 3), (2, 5)],
-                        [(0, 3), (1, 5), (2, 4)], [(0, 3), (1, 4), (2, 5)],
-                        [(0, 5), (1, 2), (3, 4)], [(0, 4), (1, 2), (3, 5)],
-                        [(0, 2), (1, 5), (3, 4)], [(0, 2), (1, 4), (3, 5)],
-                        [(0, 3), (1, 2), (4, 5)], [(0, 2), (1, 3), (4, 5)],
-                        [(0, 1), (2, 5), (3, 4)], [(0, 1), (2, 4), (3, 5)],
-                        [(0, 1), (2, 3), (4, 5)],
-                    ]
-                    
-                    matched_pairs = None
-                    for priority_pattern in PAIRING_PRIORITY:
-                        valid = True
-                        test_pairs = []
-                        for idx1, idx2 in priority_pattern:
-                            if idx1 >= len(teams) or idx2 >= len(teams):
-                                valid = False
-                                break
-                            team1, team2 = teams[idx1], teams[idx2]
-                            if team2 in match_history[team1]:
-                                valid = False
-                                break
-                            test_pairs.append((team1, team2))
-                        if valid:
-                            matched_pairs = test_pairs
-                            break
-                    
-                    if matched_pairs is None:
-                        matched_pairs = []
-                        for idx1, idx2 in PAIRING_PRIORITY[0]:
-                            if idx1 < len(teams) and idx2 < len(teams):
-                                matched_pairs.append((teams[idx1], teams[idx2]))
-                    
-                    for team1, team2 in matched_pairs:
-                        wins1, losses1 = records[team1]
-                        wins2, losses2 = records[team2]
-                        is_elimination_or_advancement = (wins1 == 2 or losses1 == 2 or wins2 == 2 or losses2 == 2)
-                        bo_format = 'bo3' if is_elimination_or_advancement else 'bo1'
-                        
-                        prob1, _ = predict_match(team1, team2, ratings, bo_format)
-                        winner = team1 if random.random() < prob1 else team2
-                        loser = team2 if winner == team1 else team1
-                        
-                        w, l = records[winner]
-                        records[winner] = (w + 1, l)
-                        w, l = records[loser]
-                        records[loser] = (w, l + 1)
-                        
-                        match_history[team1].append(team2)
-                        match_history[team2].append(team1)
-        
-        sim_result = {'3-0': set(), 'qualified': set(), '0-3': set()}
-        for team, (wins, losses) in records.items():
-            team_results[team]['total'] += 1
-            if wins == 3 and losses == 0:
-                team_results[team]['3-0'] += 1
-                team_results[team]['qualified'] += 1
-                sim_result['3-0'].add(team)
-                sim_result['qualified'].add(team)
-            elif wins == 3:
-                team_results[team]['qualified'] += 1
-                sim_result['qualified'].add(team)
-            elif losses == 3 and wins == 0:
-                team_results[team]['0-3'] += 1
-                sim_result['0-3'].add(team)
-        
-        all_simulations.append(sim_result)
-        
-        if (sim + 1) % 10000 == 0:
-            print(f"完成 {sim + 1}/{num_simulations} 次模拟")
+            # 更新进度条
+            pbar.update(1)
     
     results = {}
     for team, stats in team_results.items():
@@ -757,7 +772,7 @@ def main():
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
         
-    output_file = os.path.join(output_dir, 'intermediate_sim_data.json')
+    output_file = os.path.join(output_dir, 'cs2_gen_preresult.json')
 
     try:
         with open(output_file, 'w', encoding='utf-8') as f:

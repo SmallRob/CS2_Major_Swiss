@@ -96,7 +96,7 @@ Manually input stage X participating teams and round 1 matchups. Order matters! 
 python cs2_gen_preresult.py
 ```
 
-This creates `output/intermediate_sim_data.json` with 100k Swiss round simulations.
+This creates `output/cs2_gen_preresult.json` with 100k Swiss round simulations.
 
 **Step 2: GPU-accelerated Pick'Em optimization**
 
@@ -141,7 +141,7 @@ Selects the combo with highest success rate (at least 5 hits) from 100k simulati
 
 - `output/final_prediction.json` - Full results with best Pick'Em combination
 - `output/optimized_report.txt` - Human-readable recommendations
-- `output/intermediate_sim_data.json` - Cached simulation data (from step 1)
+- `output/cs2_gen_preresult.json` - Cached simulation data (from step 1)
 - `gpu_checkpoint.json` - Auto-saved progress (can resume if interrupted)
 
 **Notes:**
