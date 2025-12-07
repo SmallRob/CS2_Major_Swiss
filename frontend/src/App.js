@@ -353,12 +353,12 @@ function SwissTab({ data, currentLocale }) {
           </h3>
           <ul className="space-y-3">
             {data.best_prediction['3-0'].map((team, index) => (
-              <li key={index} className="flex items-center justify-between bg-white dark:bg-gray-600/30 py-3 px-4 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/30">
+              <li key={index} className="flex items-center justify-between bg-white dark:bg-gray-700/50 py-3 px-4 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/50">
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-300">
+                  <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-200">
                     {team.substring(0, 2)}
                   </div>
-                  <span className="font-medium truncate max-w-[120px] text-gray-700 dark:text-gray-300">{team}</span>
+                  <span className="font-medium truncate max-w-[120px] text-gray-700 dark:text-gray-200">{team}</span>
                 </div>
                 <span className="bg-green-500/80 text-white text-xs font-bold px-2 py-1 rounded whitespace-nowrap" 
                       title={currentLocale === 'en-US' ? '3-0 Result' : '3-0结果'}>
@@ -376,12 +376,12 @@ function SwissTab({ data, currentLocale }) {
           </h3>
           <ul className="space-y-3">
             {data.best_prediction.advances.map((team, index) => (
-              <li key={index} className="flex items-center justify-between bg-white dark:bg-gray-600/30 py-3 px-4 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/30">
+              <li key={index} className="flex items-center justify-between bg-white dark:bg-gray-700/50 py-3 px-4 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/50">
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-300">
+                  <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-200">
                     {team.substring(0, 2)}
                   </div>
-                  <span className="font-medium truncate max-w-[120px] text-gray-700 dark:text-gray-300">{team}</span>
+                  <span className="font-medium truncate max-w-[120px] text-gray-700 dark:text-gray-200">{team}</span>
                 </div>
                 <span className="bg-yellow-500/80 text-white text-xs font-bold px-2 py-1 rounded whitespace-nowrap" 
                       title={i18n.t('predictions.highestQualification', currentLocale)}>
@@ -399,12 +399,12 @@ function SwissTab({ data, currentLocale }) {
           </h3>
           <ul className="space-y-3">
             {data.best_prediction['0-3'].map((team, index) => (
-              <li key={index} className="flex items-center justify-between bg-white dark:bg-gray-600/30 py-3 px-4 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/30">
+              <li key={index} className="flex items-center justify-between bg-white dark:bg-gray-700/50 py-3 px-4 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/50">
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-300">
+                  <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-200">
                     {team.substring(0, 2)}
                   </div>
-                  <span className="font-medium truncate max-w-[120px] text-gray-700 dark:text-gray-300">{team}</span>
+                  <span className="font-medium truncate max-w-[120px] text-gray-700 dark:text-gray-200">{team}</span>
                 </div>
                 <span className="bg-red-500/80 text-white text-xs font-bold px-2 py-1 rounded whitespace-nowrap" 
                       title={currentLocale === 'en-US' ? '0-3 Result' : '0-3结果'}>
@@ -665,7 +665,11 @@ function ChampionsTab({ data, currentLocale }) {
         <h3 className="text-2xl font-bold mb-2 flex justify-center items-center text-gray-800 dark:text-yellow-200">
           <span className="mr-2">🏆</span> {i18n.t('predictions.predictedChampion', currentLocale)}
         </h3>
-        <p className="text-4xl md:text-5xl font-bold text-yellow-800 dark:text-yellow-300 mb-4 py-4 bg-black/10 dark:bg-black/20 rounded-xl">{data.final_champion}</p>
+        <p className="text-4xl md:text-5xl font-bold mb-4 py-4 rounded-xl bg-gradient-to-r from-yellow-200 to-yellow-300 dark:from-yellow-900/50 dark:to-yellow-800/50 text-gray-900 dark:text-yellow-100 shadow-lg dark:shadow-yellow-900/20">
+          <span className="drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_2px_3px_rgba(255,255,0,0.5)] filter">
+            {data.final_champion}
+          </span>
+        </p>
         <p className="text-lg text-gray-800 dark:text-yellow-200">{i18n.t('predictions.basedOnSuccess', currentLocale)} {(data.based_on_success_rate * 100).toFixed(2)}% {i18n.t('common.rate', currentLocale)}</p>
       </div>
 
