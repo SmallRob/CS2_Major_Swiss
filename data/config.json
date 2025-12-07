@@ -11,7 +11,7 @@
   },
   "simulation_params": {
     "playoff_simulations": 500000,
-    "num_simulations": 10000
+    "num_simulations": 100000
   },
   "performance_params": {
     "eval_batch_size": 5000,

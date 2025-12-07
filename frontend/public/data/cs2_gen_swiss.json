@@ -1,0 +1,32 @@
+{
+  "best_prediction": {
+    "3-0": [
+      "FURIA",
+      "MOUZ"
+    ],
+    "advances": [
+      "Natus Vincere",
+      "Vitality",
+      "Falcons",
+      "B8",
+      "Spirit",
+      "G2"
+    ],
+    "0-3": [
+      "Liquid",
+      "Passion UA"
+    ]
+  },
+  "success_rate": 0.25784000754356384,
+  "timestamp": "2025-12-06T14:29:11.183303",
+  "config_used": {
+    "device": {
+      "use_gpu": false,
+      "gpu_id": 0
+    },
+    "performance": {
+      "eval_batch_size": 5000,
+      "save_every": 1000000
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "quarter_finals": [
+    {
+      "match": "QF1",
+      "team1": "FURIA",
+      "team2": "MOUZ",
+      "predicted_winner": "FURIA",
+      "win_probability": 0.6460532667874355,
+      "format": "BO3"
+    },
+    {
+      "match": "QF2",
+      "team1": "Natus Vincere",
+      "team2": "Vitality",
+      "predicted_winner": "Natus Vincere",
+      "win_probability": 0.5167161572152056,
+      "format": "BO3"
+    },
+    {
+      "match": "QF3",
+      "team1": "Falcons",
+      "team2": "B8",
+      "predicted_winner": "Falcons",
+      "win_probability": 0.5132418498163341,
+      "format": "BO3"
+    },
+    {
+      "match": "QF4",
+      "team1": "Spirit",
+      "team2": "G2",
+      "predicted_winner": "Spirit",
+      "win_probability": 0.5411446312690508,
+      "format": "BO3"
+    }
+  ],
+  "semi_finals": [
+    {
+      "match": "SF1",
+      "team1": "FURIA",
+      "team2": "Natus Vincere",
+      "predicted_winner": "FURIA",
+      "win_probability": 0.6515129747630237,
+      "format": "BO3"
+    },
+    {
+      "match": "SF2",
+      "team1": "Falcons",
+      "team2": "Spirit",
+      "predicted_winner": "Falcons",
+      "win_probability": 0.5124675045528738,
+      "format": "BO3"
+    }
+  ],
+  "final": {
+    "match": "Final",
+    "team1": "FURIA",
+    "team2": "Falcons",
+    "predicted_winner": "FURIA",
+    "win_probability": 0.6349724317517782,
+    "format": "BO5"
+  },
+  "final_champion": "FURIA",
+  "probabilities": {
+    "top4": {
+      "MOUZ": 0.286932,
+      "Natus Vincere": 0.52458,
+      "B8": 0.479682,
+      "Spirit": 0.561304,
+      "FURIA": 0.713068,
+      "Vitality": 0.47542,
+      "Falcons": 0.520318,
+      "G2": 0.438696
+    },
+    "top2": {
+      "Natus Vincere": 0.178466,
+      "B8": 0.25292,
+      "Vitality": 0.151428,
+      "Falcons": 0.284212,
+      "Spirit": 0.274574,
+      "FURIA": 0.520714,
+      "MOUZ": 0.149392,
+      "G2": 0.188294
+    },
+    "champion": {
+      "Natus Vincere": 0.089126,
+      "Falcons": 0.112382,
+      "Vitality": 0.070438,
+      "FURIA": 0.397538,
+      "MOUZ": 0.075672,
+      "Spirit": 0.10278,
+      "B8": 0.094224,
+      "G2": 0.05784
+    }
+  },
+  "based_on_success_rate": 0.25784000754356384
+}
