@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  cs2-frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: cs2-major-swiss-frontend-dev
+    ports:
+      - "3001:3001"
+    volumes:
+      # 挂载源代码以支持热重载
+      - ./src:/app/src
+      - ./public:/app/public
+      # 挂载公共数据目录
+      - ./public/data:/app/public/data
+      # 挂载项目根目录的data目录到容器内部
+      - ../data:/app/data
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    restart: unless-stopped

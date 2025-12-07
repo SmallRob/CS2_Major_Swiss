@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  cs2-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cs2-major-swiss-frontend
+    ports:
+      - "3001:3001"
+    volumes:
+      # 挂载公共数据目录到容器内部
+      - ./public/data:/app/build/data
+      # 如果需要挂载源码中的data目录，可以取消下面这行的注释
+      # - ../data:/app/data
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
