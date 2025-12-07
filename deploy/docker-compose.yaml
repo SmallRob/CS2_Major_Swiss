@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   cs2-predictor:
-    build: .
+    build: 
+      context: ..
+      dockerfile: deploy/Dockerfile
     container_name: cs2-major-swiss-predictor
     deploy:
       resources:
@@ -13,9 +15,9 @@ services:
               capabilities: [gpu]
     volumes:
       # 挂载数据目录
-      - ./data:/app/data
+      - ../data:/app/data
       # 挂载输出目录并实现持久化
-      - ./output:/app/output
+      - ../output:/app/output
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
-    command: bash -c "python cs2_gen_preresult.py && python cs2_gen_swiss.py && python cs2_prediction_final.json"
+    command: bash -c "python cs2_gen_preresult.py && python cs2_gen_swiss.py && python cs2_prediction_final.py"

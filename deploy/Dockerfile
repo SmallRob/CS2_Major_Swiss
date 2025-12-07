@@ -16,7 +16,12 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir pandas numpy PyYAML tqdm
 
 # 复制项目文件
-COPY . .
+COPY *.py ./
+COPY data ./data
+COPY tools ./tools
+COPY test ./test
+COPY frontend ./frontend
+COPY output ./output
 
 # 创建输出目录
 RUN mkdir -p output
