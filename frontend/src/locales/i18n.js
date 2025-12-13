@@ -91,7 +91,19 @@ const translations = {
     predictedWinner: { 'zh-CN': '预测胜者', 'en-US': 'Predicted Winner' },
     winProbability: { 'zh-CN': '胜率', 'en-US': 'Win Probability' },
     match: { 'zh-CN': '比赛', 'en-US': 'Match' },
-    format: { 'zh-CN': '赛制', 'en-US': 'Format' }
+    format: { 'zh-CN': '赛制', 'en-US': 'Format' },
+    progress: { 'zh-CN': '晋级进度', 'en-US': 'Progress' },
+    stage8to4: { 'zh-CN': '8进4阶段', 'en-US': '8 to 4 Stage' },
+    stage4to2: { 'zh-CN': '4进2阶段', 'en-US': '4 to 2 Stage' },
+    stage2to1: { 'zh-CN': '2进1阶段', 'en-US': '2 to 1 Stage' },
+    quarterFinalsShort: { 'zh-CN': '四分之一决赛', 'en-US': 'Quarter Finals' },
+    semiFinalsShort: { 'zh-CN': '半决赛', 'en-US': 'Semi Finals' },
+    finalShort: { 'zh-CN': '决赛', 'en-US': 'Final' },
+    treeViewDescription: { 'zh-CN': '树形视图展示淘汰赛对阵情况和晋级路径', 'en-US': 'Tree view showing playoff matchups and advancement paths' },
+    result30: { 'zh-CN': '3-0结果', 'en-US': '3-0 Result' },
+    result03: { 'zh-CN': '0-3结果', 'en-US': '0-3 Result' },
+    advanceToSemifinals: { 'zh-CN': '晋级半决赛', 'en-US': 'Advance to Semifinals' },
+    advanceToFinal: { 'zh-CN': '晋级总决赛', 'en-US': 'Advance to Final' }
   },
 
   // 投币相关

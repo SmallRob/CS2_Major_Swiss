@@ -361,7 +361,7 @@ function SwissTab({ data, currentLocale }) {
                   <span className="font-medium truncate max-w-[120px] text-gray-700 dark:text-gray-200">{team}</span>
                 </div>
                 <span className="bg-green-500/80 text-white text-xs font-bold px-2 py-1 rounded whitespace-nowrap" 
-                      title={currentLocale === 'en-US' ? '3-0 Result' : '3-0结果'}>
+                      title={i18n.t('matchStages.result30', currentLocale)}>
                   3-0
                 </span>
               </li>
@@ -407,7 +407,7 @@ function SwissTab({ data, currentLocale }) {
                   <span className="font-medium truncate max-w-[120px] text-gray-700 dark:text-gray-200">{team}</span>
                 </div>
                 <span className="bg-red-500/80 text-white text-xs font-bold px-2 py-1 rounded whitespace-nowrap" 
-                      title={currentLocale === 'en-US' ? '0-3 Result' : '0-3结果'}>
+                      title={i18n.t('matchStages.result03', currentLocale)}>
                   0-3
                 </span>
               </li>
@@ -437,181 +437,219 @@ function FinalTab({ data, currentLocale }) {
         {i18n.t('tabs.final', currentLocale)}
       </h2>
       
-      {/* Info Card for Playoff System */}
-      <div className="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-gray-700 dark:to-gray-800 rounded-xl p-6 shadow-lg border border-purple-100 dark:border-gray-600 mb-8 transition-all duration-300 hover:shadow-xl">
-        <div className="flex items-start">
-          <div className="bg-purple-100 dark:bg-purple-900/50 p-3 rounded-lg mr-4">
-            <span className="text-2xl">🏆</span>
+      {/* 晋级进度条 */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-lg font-bold text-gray-700 dark:text-gray-300">{i18n.t('matchStages.progress', currentLocale)}</h3>
+        </div>
+        <div className="flex space-x-2">
+          <div className="flex-1 h-2 rounded-full bg-blue-500"></div>
+          <div className="flex-1 h-2 rounded-full bg-green-500"></div>
+          <div className="flex-1 h-2 rounded-full bg-yellow-500"></div>
+        </div>
+        <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+          <span>{i18n.t('matchStages.quarterFinalsShort', currentLocale)}</span>
+          <span>{i18n.t('matchStages.semiFinalsShort', currentLocale)}</span>
+          <span>{i18n.t('matchStages.finalShort', currentLocale)}</span>
+        </div>
+      </div>
+
+      {/* 三段式树形结构布局 */}
+      <div className="flex flex-col items-center w-full max-w-6xl mx-auto pt-4">
+        {/* 四分之一决赛 - 第一段 */}
+        <div className="w-full mb-20 relative">
+          <h3 className="text-2xl font-bold mb-8 text-center text-orange-600 dark:text-orange-400">
+            {i18n.t('matchStages.quarterFinals', currentLocale)}
+          </h3>
+          <div className="flex justify-between items-start">
+            {/* 左侧两个对局 */}
+            <div className="w-2/5 flex flex-col space-y-12">
+              {data.quarter_finals.slice(0, 2).map((match, index) => (
+                <div key={index} className="w-full">
+                  <MatchCard match={match} currentLocale={currentLocale} />
+                </div>
+              ))}
+            </div>
+
+            {/* 中间连接线和晋级箭头 */}
+            <div className="w-1/5 flex flex-col items-center justify-center relative">
+              {/* 垂直连线 */}
+              <div className="absolute top-1/4 bottom-1/4 w-0.5 bg-blue-400"></div>
+              {/* 上方箭头 */}
+              <div className="flex flex-col items-center mb-24 mt-6">
+                <svg className="w-8 h-8 text-blue-500 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {data.quarter_finals[0].predicted_winner}
+                </span>
+              </div>
+              {/* 下方箭头 */}
+              <div className="flex flex-col items-center mt-24">
+                <svg className="w-8 h-8 text-blue-500 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {data.quarter_finals[1].predicted_winner}
+                </span>
+              </div>
+            </div>
+
+            {/* 右侧两个对局 */}
+            <div className="w-2/5 flex flex-col space-y-12">
+              {data.quarter_finals.slice(2, 4).map((match, index) => (
+                <div key={index} className="w-full">
+                  <MatchCard match={match} currentLocale={currentLocale} />
+                </div>
+              ))}
+            </div>
           </div>
-          <div>
-            <h3 className="text-xl font-bold mb-3 text-purple-700 dark:text-purple-400">
-              {i18n.t('infoCards.playoffTitle', currentLocale)}
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 mb-3">
-              {i18n.t('infoCards.playoffDesc1', currentLocale)}
-            </p>
-            <p className="text-gray-700 dark:text-gray-300 mb-3">
-              {i18n.t('infoCards.playoffDesc2', currentLocale)}
-            </p>
-            <div className="mt-3 p-3 bg-purple-100/50 dark:bg-purple-900/30 rounded-lg">
-              <p className="text-sm text-purple-800 dark:text-purple-200">
-                <span className="font-semibold">{i18n.t('common.prediction', currentLocale)}：</span>
-                {i18n.t('infoCards.playoffModel', currentLocale)}
-              </p>
+        </div>
+
+        {/* 晋级箭头 - 连接四分之一决赛和半决赛 */}
+        <div className="flex justify-center w-full mb-16">
+          <div className="flex flex-col items-center">
+            <svg className="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+            <span className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              {i18n.t('matchStages.advanceToSemifinals', currentLocale)}
+            </span>
+          </div>
+        </div>
+
+        {/* 半决赛 - 第二段 */}
+        <div className="w-full mb-20 relative">
+          <h3 className="text-2xl font-bold mb-8 text-center text-orange-600 dark:text-orange-400">
+            {i18n.t('matchStages.semiFinals', currentLocale)}
+          </h3>
+          <div className="flex justify-center items-start">
+            <div className="w-3/5 flex justify-center space-x-16">
+              {data.semi_finals.map((match, index) => (
+                <div key={index} className="w-full max-w-md">
+                  <MatchCard match={match} currentLocale={currentLocale} isSemiFinal={true} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 晋级箭头 - 连接半决赛和总决赛 */}
+        <div className="flex justify-center w-full mb-16">
+          <div className="flex flex-col items-center">
+            <svg className="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+            <span className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              {i18n.t('matchStages.advanceToFinal', currentLocale)}
+            </span>
+          </div>
+        </div>
+
+        {/* 总决赛 - 第三段 */}
+        <div className="w-full">
+          <h3 className="text-2xl font-bold mb-8 text-center text-orange-600 dark:text-orange-400">
+            {i18n.t('matchStages.final', currentLocale)} ({data.final.format})
+          </h3>
+          <div className="flex justify-center">
+            <div className="w-full max-w-2xl">
+              <FinalMatchCard match={data.final} currentLocale={currentLocale} />
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Quarter Finals */}
-      <div className="mb-10">
-        <h3 className="text-xl font-bold mb-4 text-orange-600 dark:text-orange-400 border-b border-orange-200 dark:border-orange-400/50 pb-2 flex items-center">
-          <span className="mr-2">🔶</span> {i18n.t('matchStages.quarterFinals', currentLocale)}
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {data.quarter_finals.map((match, index) => (
-            <div key={index} className="bg-white dark:bg-gray-700/50 rounded-xl p-5 shadow-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/30">
-              <div className="flex justify-between items-center mb-3">
-                <span className="font-bold text-gray-700 dark:text-gray-300 text-sm">{match.match}</span>
-                <span className="bg-purple-600/80 px-2 py-1 rounded text-xs text-white">{match.format}</span>
-              </div>
-              <div className="space-y-3">
-                <div className={`flex justify-between items-center p-3 rounded-lg transition-all duration-300 ${
-                  match.predicted_winner === match.team1 
-                    ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-md border border-green-300 dark:border-green-600/30' 
-                    : 'bg-gray-100 dark:bg-gray-600/30'
-                }`}>
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-300">
-                      {match.team1.substring(0, 2)}
-                    </div>
-                    <span className={`truncate max-w-[90px] ${match.predicted_winner === match.team1 ? 'font-bold' : ''}`}>{match.team1}</span>
-                  </div>
-                  {match.predicted_winner === match.team1 && <span className="text-green-600 dark:text-green-300 whitespace-nowrap" 
-                      title={i18n.t('matchStages.predictedWinner', currentLocale)}>{currentLocale === 'en-US' ? '✓ Winner' : '✓ ' + i18n.t('matchStages.predictedWinner', currentLocale)}</span>}
-                </div>
-                <div className="text-center text-gray-500 dark:text-gray-400 text-sm">VS</div>
-                <div className={`flex justify-between items-center p-3 rounded-lg transition-all duration-300 ${
-                  match.predicted_winner === match.team2 
-                    ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-md border border-green-300 dark:border-green-600/30' 
-                    : 'bg-gray-100 dark:bg-gray-600/30'
-                }`}>
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-300">
-                      {match.team2.substring(0, 2)}
-                    </div>
-                    <span className={`truncate max-w-[90px] ${match.predicted_winner === match.team2 ? 'font-bold' : ''}`}>{match.team2}</span>
-                  </div>
-                  {match.predicted_winner === match.team2 && <span className="text-green-600 dark:text-green-300 text-sm">✓</span>}
-                </div>
-              </div>
-              <div className="mt-3 text-center text-sm text-gray-700 dark:text-gray-300">
-                {i18n.t('matchStages.winProbability', currentLocale)}: <span className="font-bold text-yellow-600 dark:text-yellow-300">{(match.win_probability * 100).toFixed(1)}%</span>
-              </div>
+// 比赛卡片组件
+function MatchCard({ match, currentLocale, isSemiFinal = false }) {
+  return (
+    <div className="bg-white dark:bg-gray-700/50 rounded-xl p-5 shadow-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/30 transform transition-transform hover:scale-105">
+      <div className="flex justify-between items-center mb-3">
+        <span className={`font-bold text-gray-700 dark:text-gray-300 ${isSemiFinal ? 'text-base' : 'text-sm'}`}>{match.match}</span>
+        <span className="bg-purple-600/80 px-2 py-1 rounded text-xs text-white">{match.format}</span>
+      </div>
+      <div className="space-y-3">
+        <div className={`flex justify-between items-center p-3 rounded-lg transition-all duration-300 ${
+          match.predicted_winner === match.team1 
+            ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-md border border-green-300 dark:border-green-600/30' 
+            : 'bg-gray-100 dark:bg-gray-600/30'
+        }`}>
+          <div className="flex items-center">
+            <div className={`${isSemiFinal ? 'w-10 h-10' : 'w-8 h-8'} bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center ${isSemiFinal ? 'text-sm' : 'text-xs'} font-bold text-gray-700 dark:text-gray-300`}>
+              {match.team1.substring(0, 2)}
             </div>
-          ))}
+            <span className={`${isSemiFinal ? 'text-lg' : 'font-medium'} ${match.predicted_winner === match.team1 ? 'font-bold' : ''}`}>{match.team1}</span>
+          </div>
+          {match.predicted_winner === match.team1 && <span className="text-green-600 dark:text-green-300 font-bold">✓</span>}
+        </div>
+        <div className="text-center text-gray-500 dark:text-gray-400 font-bold">VS</div>
+        <div className={`flex justify-between items-center p-3 rounded-lg transition-all duration-300 ${
+          match.predicted_winner === match.team2 
+            ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-md border border-green-300 dark:border-green-600/30' 
+            : 'bg-gray-100 dark:bg-gray-600/30'
+        }`}>
+          <div className="flex items-center">
+            <div className={`${isSemiFinal ? 'w-10 h-10' : 'w-8 h-8'} bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center ${isSemiFinal ? 'text-sm' : 'text-xs'} font-bold text-gray-700 dark:text-gray-300`}>
+              {match.team2.substring(0, 2)}
+            </div>
+            <span className={`${isSemiFinal ? 'text-lg' : 'font-medium'} ${match.predicted_winner === match.team2 ? 'font-bold' : ''}`}>{match.team2}</span>
+          </div>
+          {match.predicted_winner === match.team2 && <span className="text-green-600 dark:text-green-300 font-bold">✓</span>}
         </div>
       </div>
+      <div className="mt-3 text-center text-sm text-gray-700 dark:text-gray-300">
+        {i18n.t('matchStages.winProbability', currentLocale)}: <span className="font-bold text-yellow-600 dark:text-yellow-300">{(match.win_probability * 100).toFixed(1)}%</span>
+      </div>
+    </div>
+  );
+}
 
-      {/* Semi Finals */}
-      <div className="mb-10">
-        <h3 className="text-xl font-bold mb-4 text-orange-600 dark:text-orange-400 border-b border-orange-200 dark:border-orange-400/50 pb-2 flex items-center">
-          <span className="mr-2">🔷</span> {i18n.t('matchStages.semiFinals', currentLocale)}
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.semi_finals.map((match, index) => (
-            <div key={index} className="bg-white dark:bg-gray-700/50 rounded-xl p-5 shadow-lg backdrop-blur-sm border border-gray-200 dark:border-gray-600/30">
-              <div className="flex justify-between items-center mb-3">
-                <span className="font-bold text-gray-700 dark:text-gray-300">{match.match}</span>
-                <span className="bg-purple-600/80 px-2 py-1 rounded text-sm text-white">{match.format}</span>
-              </div>
-              <div className="space-y-3">
-                <div className={`flex justify-between items-center p-3 rounded-lg transition-all duration-300 ${
-                  match.predicted_winner === match.team1 
-                    ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-md border border-green-300 dark:border-green-600/30' 
-                    : 'bg-gray-100 dark:bg-gray-600/30'
-                }`}>
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-300">
-                      {match.team1.substring(0, 2)}
-                    </div>
-                    <span className={`text-lg ${match.predicted_winner === match.team1 ? 'font-bold' : ''}`}>{match.team1}</span>
-                  </div>
-                  {match.predicted_winner === match.team1 && <span className="text-green-600 dark:text-green-300 whitespace-nowrap" 
-                                    title={i18n.t('matchStages.predictedWinner', currentLocale)}>{currentLocale === 'en-US' ? '✓ Winner' : '✓ ' + i18n.t('matchStages.predictedWinner', currentLocale)}</span>}
-                </div>
-                <div className="text-center text-gray-500 dark:text-gray-400">VS</div>
-                <div className={`flex justify-between items-center p-3 rounded-lg transition-all duration-300 ${
-                  match.predicted_winner === match.team2 
-                    ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-md border border-green-300 dark:border-green-600/30' 
-                    : 'bg-gray-100 dark:bg-gray-600/30'
-                }`}>
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-3 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-300">
-                      {match.team2.substring(0, 2)}
-                    </div>
-                    <span className={`text-lg ${match.predicted_winner === match.team2 ? 'font-bold' : ''}`}>{match.team2}</span>
-                  </div>
-                  {match.predicted_winner === match.team2 && <span className="text-green-600 dark:text-green-300 whitespace-nowrap" 
-                                    title={i18n.t('matchStages.predictedWinner', currentLocale)}>{currentLocale === 'en-US' ? '✓ Winner' : '✓ ' + i18n.t('matchStages.predictedWinner', currentLocale)}</span>}
-                </div>
-              </div>
-              <div className="mt-3 text-center text-sm text-gray-700 dark:text-gray-300">
-                {i18n.t('matchStages.winProbability', currentLocale)}: <span className="font-bold text-yellow-600 dark:text-yellow-300">{(match.win_probability * 100).toFixed(1)}%</span>
-              </div>
+// 决赛卡片组件
+function FinalMatchCard({ match, currentLocale }) {
+  return (
+    <div className="bg-gradient-to-br from-white to-gray-100 dark:from-gray-700/50 dark:to-gray-800/50 rounded-2xl p-6 shadow-2xl backdrop-blur-sm border border-gray-200 dark:border-gray-600/30 transform transition-transform hover:scale-105">
+      <div className="flex justify-between items-center mb-4">
+        <span className="font-bold text-gray-700 dark:text-gray-300 text-lg">{match.match}</span>
+        <span className="bg-purple-600/80 px-3 py-1 rounded text-white">{match.format}</span>
+      </div>
+      <div className="space-y-4">
+        <div className={`flex justify-between items-center p-4 rounded-xl transition-all duration-300 ${
+          match.predicted_winner === match.team1 
+            ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-lg border border-green-300 dark:border-green-600/30' 
+            : 'bg-gray-100 dark:bg-gray-600/30'
+        }`}>
+          <div className="flex items-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-4 flex items-center justify-center text-base font-bold text-gray-700 dark:text-gray-300">
+              {match.team1.substring(0, 2)}
             </div>
-          ))}
+            <span className={`text-xl font-bold ${match.predicted_winner === match.team1 ? 'text-green-600 dark:text-green-400' : ''}`}>{match.team1}</span>
+          </div>
+          {match.predicted_winner === match.team1 && <span className="text-green-600 dark:text-green-300 text-2xl font-bold">✓</span>}
+        </div>
+        <div className="text-center text-4xl text-gray-500 dark:text-gray-400 font-bold">⚔️</div>
+        <div className={`flex justify-between items-center p-4 rounded-xl transition-all duration-300 ${
+          match.predicted_winner === match.team2 
+            ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-lg border border-green-300 dark:border-green-600/30' 
+            : 'bg-gray-100 dark:bg-gray-600/30'
+        }`}>
+          <div className="flex items-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-4 flex items-center justify-center text-base font-bold text-gray-700 dark:text-gray-300">
+              {match.team2.substring(0, 2)}
+            </div>
+            <span className={`text-xl font-bold ${match.predicted_winner === match.team2 ? 'text-green-600 dark:text-green-400' : ''}`}>{match.team2}</span>
+          </div>
+          {match.predicted_winner === match.team2 && <span className="text-green-600 dark:text-green-300 text-2xl font-bold">✓</span>}
         </div>
       </div>
-
-      {/* Final */}
-      <div>
-        <h3 className="text-xl font-bold mb-4 text-orange-600 dark:text-orange-400 border-b border-orange-200 dark:border-orange-400/50 pb-2 flex items-center">
-          <span className="mr-2">🔶</span> {i18n.t('matchStages.final', currentLocale)} ({data.final.format})
-        </h3>
-        <div className="bg-gradient-to-br from-white to-gray-100 dark:from-gray-700/50 dark:to-gray-800/50 rounded-xl p-6 shadow-2xl max-w-2xl mx-auto backdrop-blur-sm border border-gray-200 dark:border-gray-600/30">
-          <div className="flex justify-between items-center mb-4">
-            <span className="font-bold text-gray-700 dark:text-gray-300">{data.final.match}</span>
-            <span className="bg-purple-600/80 px-3 py-1 rounded text-white">{data.final.format}</span>
-          </div>
-          <div className="space-y-4">
-            <div className={`flex justify-between items-center p-4 rounded-xl transition-all duration-300 ${
-              data.final.predicted_winner === data.final.team1 
-                ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-lg border border-green-300 dark:border-green-600/30' 
-                : 'bg-gray-100 dark:bg-gray-600/30'
-            }`}>
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-4 flex items-center justify-center text-sm font-bold text-gray-700 dark:text-gray-300">
-                  {data.final.team1.substring(0, 2)}
-                </div>
-                <span className={`text-xl ${data.final.predicted_winner === data.final.team1 ? 'font-bold' : ''}`}>{data.final.team1}</span>
-              </div>
-              {data.final.predicted_winner === data.final.team1 && <span className="text-green-600 dark:text-green-300 text-lg whitespace-nowrap" title={i18n.t('matchStages.predictedWinner', currentLocale)}>{currentLocale === 'en-US' ? '✓ Winner' : '✓ ' + i18n.t('matchStages.predictedWinner', currentLocale)}</span>}
-            </div>
-            <div className="text-center text-3xl text-gray-500 dark:text-gray-400">⚔️</div>
-            <div className={`flex justify-between items-center p-4 rounded-xl transition-all duration-300 ${
-              data.final.predicted_winner === data.final.team2 
-                ? 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-700/80 dark:to-green-900/80 shadow-lg border border-green-300 dark:border-green-600/30' 
-                : 'bg-gray-100 dark:bg-gray-600/30'
-            }`}>
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-800 rounded-full mr-4 flex items-center justify-center text-sm font-bold text-gray-700 dark:text-gray-300">
-                  {data.final.team2.substring(0, 2)}
-                </div>
-                <span className={`text-xl ${data.final.predicted_winner === data.final.team2 ? 'font-bold' : ''}`}>{data.final.team2}</span>
-              </div>
-              {data.final.predicted_winner === data.final.team2 && <span className="text-green-600 dark:text-green-300 text-lg whitespace-nowrap" title={i18n.t('matchStages.predictedWinner', currentLocale)}>{currentLocale === 'en-US' ? '✓ Winner' : '✓ ' + i18n.t('matchStages.predictedWinner', currentLocale)}</span>}
-            </div>
-          </div>
-          <div className="mt-5 text-center">
-            <p className="text-lg text-gray-700 dark:text-gray-300">
-              {currentLocale === 'en-US' ? 'Winner' : i18n.t('matchStages.predictedWinner', currentLocale)}: <span className="font-bold text-green-600 dark:text-green-400 text-xl">{data.final.predicted_winner}</span>
-            </p>
-            <p className="mt-2 text-gray-700 dark:text-gray-300">
-              {i18n.t('matchStages.winProbability', currentLocale)}: <span className="font-bold text-yellow-600 dark:text-yellow-300 text-lg">{(data.final.win_probability * 100).toFixed(1)}%</span>
-            </p>
-          </div>
-        </div>
+      <div className="mt-5 text-center">
+        <p className="text-lg text-gray-700 dark:text-gray-300">
+          {i18n.t('matchStages.predictedWinner', currentLocale)}: <span className="font-bold text-green-600 dark:text-green-400 text-xl">{match.predicted_winner}</span>
+        </p>
+        <p className="mt-2 text-gray-700 dark:text-gray-300">
+          {i18n.t('matchStages.winProbability', currentLocale)}: <span className="font-bold text-yellow-600 dark:text-yellow-300 text-lg">{(match.win_probability * 100).toFixed(1)}%</span>
+        </p>
       </div>
     </div>
   );
